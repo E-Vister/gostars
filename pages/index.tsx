@@ -1,16 +1,14 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import {Inter} from '@next/font/google'
 import styles from '@/styles/Home.module.scss'
-import Header from '../components/header'
-
-const inter = Inter({subsets: ['latin']})
+import Header from '@/components/header'
+import HomePageSquares from "@/components/home-page-squares";
 
 const Home = () => {
     return (
         <>
             <Head>
-                <title>GoStars | Home</title>
+                <title>Home | GoStars</title>
                 <meta name="description" content="Home page of the gostars"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
@@ -36,8 +34,10 @@ const Home = () => {
 
 const EventItem = ({status, logo, name, duration}: any) => {
     const logoSrc = logo;
+    const statusForStyle = status.toLowerCase();
+
     return (
-        <div className={styles.area}>
+        <div className={`${styles.area} ${styles[statusForStyle]}`}>
             <div className={styles.event}>
                 <span className={styles.status}>{status}</span>
                 <Image
@@ -51,28 +51,7 @@ const EventItem = ({status, logo, name, duration}: any) => {
                 <span className={styles.name}>{name}</span>
                 <span className={styles.duration}>{duration}</span>
             </div>
-            <ul className={styles.circles}>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
+            <HomePageSquares/>
         </div>
     )
 }
