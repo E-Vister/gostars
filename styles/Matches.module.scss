@@ -1,0 +1,147 @@
+@import 'common/main-layout';
+@import 'common/team-cell';
+
+.main {
+}
+
+.container {
+  .page_headline {
+    font-size: 21px;
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  .matches_sublist {
+    margin-top: 18px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    .headline {
+      font-size: 19px;
+      font-weight: 800;
+      opacity: 1;
+      margin: 0 0 5px;
+    }
+  }
+
+  .match {
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    box-shadow: 0 1px 2px 0 rgb(50 50 50 / 40%);
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      box-sizing: border-box;
+    }
+
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-delay: 200ms;
+
+    &:hover {
+      padding: 15px 5px;
+      cursor: pointer;
+
+      .match_additional {
+        opacity: .9;
+      }
+    }
+
+    .match_info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 0 0 34px;
+
+      max-width: 36px;
+
+      margin-right: 16px;
+
+      .match_time {
+        font-weight: 700;
+      }
+
+      .match_meta {
+        background-color: rgba(0, 0, 0, .1);
+        border-radius: 4px;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 700;
+        color: rgba(84, 84, 84, 0.45);
+      }
+    }
+
+    .team_cell {
+    }
+
+    .score {
+      width: 100px;
+      font-weight: 700;
+      text-align: center;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      .dash {
+        font-size: 16px;
+      }
+    }
+
+    .match_additional {
+      display: inline-flex;
+      align-content: center;
+      justify-content: flex-end;
+      height: 33.6px;
+      width: 100%;
+      opacity: .65;
+
+      .match_type {
+        font-size: 11px;
+        font-weight: 700;
+
+        align-self: center;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        opacity: .5;
+      }
+
+      img {
+        width: 25px;
+        height: 25px;
+        margin: 4.3px 3px 4.3px 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .score {
+    width: 60px !important;
+  }
+
+  .match_meta {
+    text-align: left !important;
+  }
+
+  .match_additional {
+    margin-left: 8px;
+    flex-direction: column;
+
+    .match_type {
+      font-size: 8px;
+    }
+
+    img {
+      width: 18px !important;
+      height: 18px !important;
+      margin: 2px auto !important;
+    }
+  }
+}

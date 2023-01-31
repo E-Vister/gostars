@@ -1,0 +1,45 @@
+.team_cell {
+  width: 25%;
+
+  .line_align {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 1%;
+
+    &.team1 {
+      justify-content: flex-end;
+      flex-direction: row;
+
+      img {
+        margin-left: 8px;
+      }
+    }
+
+    &.team2 {
+      justify-content: flex-end;
+      flex-direction: row-reverse;
+
+      img {
+        margin-right: 8px;
+
+      }
+    }
+
+    .team_logo {
+      max-width: 30px;
+      max-height: 30px;
+    }
+
+    .team {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.team_won {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
