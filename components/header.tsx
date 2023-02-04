@@ -1,19 +1,28 @@
 import styles from '@/styles/Header.module.scss';
 import Link from 'next/link';
+import {NextPage} from "next";
+import {clsx} from "clsx";
 
-const Header = () => {
+type Props = {
+    isHomePage?: boolean;
+}
+
+const Header: NextPage<Props> = ({isHomePage}) => {
     return (
         <header className={styles.container}>
-            <div className={styles.logo}>
-                <Link href={'/'}>Header</Link>
+            <div className={`${styles.wrapper} ${clsx({
+                [styles.home_page]: isHomePage,
+            })}`}>
+                <div className={styles.logo}>
+                    <Link href={'/'}>Header</Link>
+                </div>
+                <Link href={'/matches'}>
+                    <button className={styles.button} role="link">Matches</button>
+                </Link>
+                <Link href={'/results'}>
+                    <button className={styles.button} role="link">Results</button>
+                </Link>
             </div>
-            <Link href={'/matches'}>
-                <button className={styles.button} role="link">Matches</button>
-            </Link>
-            <Link href={'/results'}>
-                <button className={styles.button} role="link">Results</button>
-            </Link>
-
         </header>
     )
 }

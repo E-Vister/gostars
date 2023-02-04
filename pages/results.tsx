@@ -4,8 +4,15 @@ import React from "react";
 import styles from '@/styles/Results.module.scss';
 import Image from "next/image";
 import {clsx} from 'clsx';
+import {useSelector} from "react-redux";
+import {selectMatches} from "@/store/matches/matchesSlice";
+import {NextPage} from "next";
+import {IMatch, IMatches, ITeam} from "@/store/matches/matches.types";
+import {MatchProps, TeamCellProps} from "@/types/types";
 
-const Results = () => {
+const Results: NextPage = () => {
+    const matches = useSelector(selectMatches);
+
     return (
         <>
             <Head>
@@ -18,52 +25,51 @@ const Results = () => {
             <main className={styles.main}>
                 <div className={styles.container}>
                     <div className={styles.page_headline}>Results</div>
-                    <ResultsSublist/>
-                    <ResultsSublist/>
-                    <ResultsSublist/>
-                    <ResultsSublist/>
+                    <ResultsSublist matches={matches}/>
+                    <ResultsSublist matches={matches}/>
+                    <ResultsSublist matches={matches}/>
+                    <ResultsSublist matches={matches}/>
                 </div>
             </main>
         </>
     )
 }
 
-const ResultsSublist = () => {
+const ResultsSublist: NextPage<IMatches> = ({matches}) => {
     return (
         <div className={styles.results_sublist}>
             <div className={styles.headline}>Results for January 27th 2023</div>
-            <ResultCell/>
-            <ResultCell/>
-            <ResultCell/>
+            <ResultCell match={matches[1]}/>
+            <ResultCell match={matches[1]}/>
+            <ResultCell match={matches[1]}/>
         </div>
     )
 }
 
-const ResultCell = () => {
+const ResultCell: NextPage<MatchProps> = ({match}) => {
     return (
         <div className={styles.result}>
             <table>
                 <tbody>
                 <tr>
-                    <TeamCell teamType={'team1'} isWon={true}/>
+                    <TeamCell teamType={'team1'} isWon={true} teamInfo={match.team1}/>
                     <td className={styles.score}>
-                        <span className={styles.score_won}>2</span>
-                        <span className={styles.dash}>-</span>
-                        <span className={styles.score_lost}>1</span>
+                        <span className={styles.score_won}>{match.score[0]}</span>
+                        <span className={styles.dash}>{match.score[1]}</span>
+                        <span className={styles.score_lost}>{match.score[2]}</span>
                     </td>
-                    <TeamCell teamType={'team2'}/>
+                    <TeamCell teamType={'team2'} teamInfo={match.team2}/>
                     <td className={styles.event}>
                         <Image
-                            loader={() => 'https://i.imgur.com/t1HQOz0.png'}
-                            src={'https://i.imgur.com/t1HQOz0.png'}
-                            alt={'BLAST Premier Spring Groups 2023'}
+                            src={match.matchEvent.logo}
+                            alt={match.matchEvent.name}
                             width={30}
                             height={30}/>
-                        <span className={styles.event_name}>BLAST Premier Spring Groups 2023</span>
+                        <span className={styles.event_name}>{match.matchEvent.name}</span>
                     </td>
                     <td className={styles.match_type}>
-                        <div>LAN</div>
-                        <div>bo3</div>
+                        <div>{match.matchType}</div>
+                        <div>{match.meta}</div>
                     </td>
                 </tr>
                 </tbody>
@@ -72,19 +78,18 @@ const ResultCell = () => {
     )
 }
 
-const TeamCell = ({teamType, isWon}: any) => {
+const TeamCell: NextPage<TeamCellProps> = ({teamType, isWon, teamInfo}) => {
     return (
         <td className={styles.team_cell}>
             <div className={`${styles.line_align} ${styles[teamType]}`}>
                 <div className={`${styles.team} ${clsx({
-                    [styles.team_won]: isWon === true,
+                    [styles.team_won]: isWon,
                 })}`}>
-                    Natus Vincere
+                    {teamInfo.name}
                 </div>
                 <Image
-                    loader={() => 'https://svgur.com/i/pvM.svg'}
-                    src={'https://svgur.com/i/pvM.svg'}
-                    alt={'team_logo'}
+                    src={teamInfo.logo}
+                    alt={teamInfo.name}
                     className={styles.team_logo}
                     width={30}
                     height={30}/>

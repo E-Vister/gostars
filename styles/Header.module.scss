@@ -6,7 +6,7 @@
   height: 50px;
 
   color: rgb(var(--foreground-rgb));
-  background-color: black;
+  background-color: #090909;
   position: fixed;
   z-index: 9999;
 
@@ -15,8 +15,23 @@
   padding: 12px 20px;
   box-shadow: 0 1px 2px 0 rgba(var(--callout-border-rgb), 0.3);
 
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+
+    margin: 0 auto;
+    width: 1000px;
+
+    &.home_page {
+      margin: 0 !important;
+    }
+  }
+
   .logo {
-    margin-right: 50px;
+    margin-right: 30px;
   }
 
   .button {
@@ -25,9 +40,9 @@
     appearance: none;
 
     background-color: transparent;
-    color: rgb(9, 41, 51);
+    color: rgb(11, 72, 93);
 
-    border: 2px solid rgba(9, 38, 47, 0.4);
+    border: 2px solid rgba(11, 72, 93, 0.4);
     border-radius: 6px;
 
     box-sizing: border-box;
@@ -65,7 +80,7 @@
       cursor: default;
     }
     &:active {
-      background-color: rgb(10, 54, 66);
+      background-color: rgb(10, 79, 103);
       box-shadow: rgba(9, 38, 47, 0.4) 0 1px 0 inset;
       transition: none 0s;
     }
