@@ -36,8 +36,20 @@
       transition-delay: 200ms;
 
       &:hover {
-        padding: 15px 5px;
+        padding: 18px 5px;
         cursor: pointer;
+
+        .score_wrapper {
+          .main_score {
+            transition: opacity 0.5s;
+            opacity: 0;
+          }
+
+          .detailed_score {
+            transition: opacity 0.5s;
+            opacity: 1;
+          }
+        }
 
         .event {
           opacity: .9;
@@ -64,22 +76,44 @@
       text-align: center;
       padding-left: 10px;
       padding-right: 10px;
+      position: relative;
 
-      .dash {
-        padding: 0 4px;
-        left: 30%
-      }
+      .score_wrapper {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
 
-      .score_won {
-        color: #08a500;
-      }
+        .detailed_score {
+          transition: opacity 0.5s;
+          font-size: 11px;
+          opacity: 0;
 
-      .score_lost {
-        color: #e40a0a;
-      }
+          .map_score {
+            margin-bottom: 1.5px;
+          }
+        }
 
-      .score_draw {
-        color: #8a8a8a;
+        .main_score {
+          transition: opacity 0.5s;
+          opacity: 1;
+        }
+
+        .dash {
+          padding: 0 4px;
+        }
+
+        .score_won {
+          color: #08a500;
+        }
+
+        .score_lost {
+          color: #e40a0a;
+        }
+
+        .score_draw {
+          color: #8a8a8a;
+        }
       }
     }
 
@@ -119,7 +153,9 @@
   .results_sublist {
     .result {
       .score {
-        width: 70px !important;
+        width: 80px !important;
+        padding-left: 5px;
+        padding-right: 5px;
       }
 
       .event {

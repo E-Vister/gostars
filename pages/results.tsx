@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Header from "@/components/header";
-import React from "react";
+import React, {MouseEventHandler, useState} from "react";
 import styles from '@/styles/Results.module.scss';
 import Image from "next/image";
 import {clsx} from 'clsx';
@@ -9,6 +9,7 @@ import {selectMatches} from "@/store/matches/matchesSlice";
 import {NextPage} from "next";
 import {IMatch, IMatches, ITeam} from "@/store/matches/matches.types";
 import {MatchProps, TeamCellProps} from "@/types/types";
+import {TimeoutId} from "@reduxjs/toolkit/src/query/core/buildMiddleware/types";
 
 const Results: NextPage = () => {
     const matches = useSelector(selectMatches);
@@ -47,16 +48,59 @@ const ResultsSublist: NextPage<IMatches> = ({matches}) => {
 }
 
 const ResultCell: NextPage<MatchProps> = ({match}) => {
+    const [isHover, setIsHover] = useState(false);
+    let timer: TimeoutId;
+
+    const onMouseEnter = () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            setIsHover(true);
+        }, 500)
+    }
+
+    const onMouseLeave = () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            setIsHover(false)
+        }, 500)
+    }
+
     return (
-        <div className={styles.result}>
+        <div className={styles.result}
+             onMouseEnter={onMouseEnter}
+             onMouseLeave={onMouseLeave}>
             <table>
                 <tbody>
                 <tr>
                     <TeamCell teamType={'team1'} isWon={true} teamInfo={match.team1}/>
                     <td className={styles.score}>
-                        <span className={styles.score_won}>{match.score[0]}</span>
-                        <span className={styles.dash}>{match.score[1]}</span>
-                        <span className={styles.score_lost}>{match.score[2]}</span>
+                        <div className={styles.score_wrapper}>
+                            {isHover
+                                ?
+                                <div className={styles.detailed_score}>
+                                    <div className={styles.map_score}>
+                                        <span className={styles.score_won}>16</span>
+                                        <span className={styles.dash}>-</span>
+                                        <span className={styles.score_lost}>4</span>
+                                    </div>
+                                    <div className={styles.map_score}>
+                                        <span className={styles.score_lost}>14</span>
+                                        <span className={styles.dash}>-</span>
+                                        <span className={styles.score_won}>16</span>
+                                    </div>
+                                    <div className={styles.map_score}>
+                                        <span className={styles.score_won}>16</span>
+                                        <span className={styles.dash}>-</span>
+                                        <span className={styles.score_lost}>12</span>
+                                    </div>
+                                </div>
+                                :
+                                <div className={styles.main_score}>
+                                    <span className={styles.score_won}>{match.score[0]}</span>
+                                    <span className={styles.dash}>{match.score[1]}</span>
+                                    <span className={styles.score_lost}>{match.score[2]}</span>
+                                </div>}
+                        </div>
                     </td>
                     <TeamCell teamType={'team2'} teamInfo={match.team2}/>
                     <td className={styles.event}>
