@@ -58,7 +58,7 @@ const MatchCell: NextPage<MatchProps> = ({match}) => {
                     </td>
                     <TeamCell teamType={'team1'} teamInfo={match.team1}/>
                     <td className={styles.score}>
-                        <span className={styles.dash}>{match.score}</span>
+                        <span className={styles.dash}>vs</span>
                     </td>
                     <TeamCell teamType={'team2'} teamInfo={match.team2}/>
                     <td className={styles.match_additional}>

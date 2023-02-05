@@ -36,6 +36,8 @@
       transition-delay: 200ms;
 
       &:hover {
+        /* "hover" dependency in 'results.tsx' -> 'ResultCell' */
+
         padding: 18px 5px;
         cursor: pointer;
 

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Header from "@/components/header";
-import React, {MouseEventHandler, useState} from "react";
+import React, {useState} from "react";
 import styles from '@/styles/Results.module.scss';
 import Image from "next/image";
 import {clsx} from 'clsx';
@@ -49,6 +49,7 @@ const ResultsSublist: NextPage<IMatches> = ({matches}) => {
 
 const ResultCell: NextPage<MatchProps> = ({match}) => {
     const [isHover, setIsHover] = useState(false);
+    const {score, team1, team2, matchEvent, matchType} = match;
     let timer: TimeoutId;
 
     const onMouseEnter = () => {
@@ -65,6 +66,24 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
         }, 500)
     }
 
+    const mapsScore = score.detailed.map((mapInfo) => {
+        return (
+            <div className={styles.map_score} key={`${mapInfo.map}-${match.id}`}>
+                <span className={`${clsx({
+                    [styles.score_won]: mapInfo.team1.totalScore > mapInfo.team2.totalScore,
+                    [styles.score_lost]: mapInfo.team1.totalScore < mapInfo.team2.totalScore,
+                    [styles.score_draw]: mapInfo.team1.totalScore === mapInfo.team2.totalScore,
+                })}`}>{mapInfo.team1.totalScore}</span>
+                <span className={styles.dash}>-</span>
+                <span className={`${clsx({
+                    [styles.score_won]: mapInfo.team2.totalScore > mapInfo.team1.totalScore,
+                    [styles.score_lost]: mapInfo.team2.totalScore < mapInfo.team1.totalScore,
+                    [styles.score_draw]: mapInfo.team2.totalScore === mapInfo.team1.totalScore,
+                })}`}>{mapInfo.team2.totalScore}</span>
+            </div>
+        )
+    })
+
     return (
         <div className={styles.result}
              onMouseEnter={onMouseEnter}
@@ -72,47 +91,41 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
             <table>
                 <tbody>
                 <tr>
-                    <TeamCell teamType={'team1'} isWon={true} teamInfo={match.team1}/>
+                    <TeamCell teamType={'team1'} isWon={true} teamInfo={team1}/>
                     <td className={styles.score}>
                         <div className={styles.score_wrapper}>
                             {isHover
                                 ?
                                 <div className={styles.detailed_score}>
-                                    <div className={styles.map_score}>
-                                        <span className={styles.score_won}>16</span>
-                                        <span className={styles.dash}>-</span>
-                                        <span className={styles.score_lost}>4</span>
-                                    </div>
-                                    <div className={styles.map_score}>
-                                        <span className={styles.score_lost}>14</span>
-                                        <span className={styles.dash}>-</span>
-                                        <span className={styles.score_won}>16</span>
-                                    </div>
-                                    <div className={styles.map_score}>
-                                        <span className={styles.score_won}>16</span>
-                                        <span className={styles.dash}>-</span>
-                                        <span className={styles.score_lost}>12</span>
-                                    </div>
+                                    {mapsScore}
                                 </div>
                                 :
                                 <div className={styles.main_score}>
-                                    <span className={styles.score_won}>{match.score[0]}</span>
-                                    <span className={styles.dash}>{match.score[1]}</span>
-                                    <span className={styles.score_lost}>{match.score[2]}</span>
+                                    <span className={`${clsx({
+                                        [styles.score_won]: score.main.team1 > score.main.team2,
+                                        [styles.score_lost]: score.main.team1 < score.main.team2,
+                                        [styles.score_draw]: score.main.team1 === score.main.team2,
+                                    })}`}>{match.score.main.team1}</span>
+                                    <span className={styles.dash}>-</span>
+                                    <span className={`${clsx({
+                                        [styles.score_won]: score.main.team2 > score.main.team1,
+                                        [styles.score_lost]: score.main.team2 < score.main.team1,
+                                        [styles.score_draw]: score.main.team2 === score.main.team1,
+                                    })}`}>{match.score.main.team2}</span>
                                 </div>}
                         </div>
                     </td>
-                    <TeamCell teamType={'team2'} teamInfo={match.team2}/>
+                    <TeamCell teamType={'team2'} teamInfo={team2}/>
                     <td className={styles.event}>
                         <Image
-                            src={match.matchEvent.logo}
-                            alt={match.matchEvent.name}
+                            src={matchEvent.logo}
+                            alt={matchEvent.name}
                             width={30}
                             height={30}/>
-                        <span className={styles.event_name}>{match.matchEvent.name}</span>
+                        <span className={styles.event_name}>{matchEvent.name}</span>
                     </td>
                     <td className={styles.match_type}>
-                        <div>{match.matchType}</div>
+                        <div>{matchType}</div>
                         <div>{match.meta}</div>
                     </td>
                 </tr>
