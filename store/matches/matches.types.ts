@@ -34,7 +34,7 @@ interface IMatchEvent {
 
 export interface IMatch {
     id: number;
-    time: string;
+    date: string;
     team1: ITeam;
     team2: ITeam;
     score: IScore;

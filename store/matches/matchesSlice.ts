@@ -7,7 +7,7 @@ const initialState: IMatches = {
     matches: [
         {
             id: 1,
-            time: '13:00',
+            date: 'Mon, 10 Feb 2023 14:00:00 GMT',
             team1: {
                 name: 'Natus Vincere',
                 logo: 'https://svgur.com/i/pvM.svg'
@@ -34,7 +34,7 @@ const initialState: IMatches = {
         },
         {
             id: 2,
-            time: '13:00',
+            date: 'Mon, 10 Feb 2023 14:00:00 GMT',
             team1: {
                 name: 'Natus Vincere',
                 logo: 'https://svgur.com/i/pvM.svg'

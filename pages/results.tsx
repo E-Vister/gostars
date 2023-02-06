@@ -7,7 +7,7 @@ import {clsx} from 'clsx';
 import {useSelector} from "react-redux";
 import {selectMatches} from "@/store/matches/matchesSlice";
 import {NextPage} from "next";
-import {IMatch, IMatches, ITeam} from "@/store/matches/matches.types";
+import {IMatches} from "@/store/matches/matches.types";
 import {MatchProps, TeamCellProps} from "@/types/types";
 import {TimeoutId} from "@reduxjs/toolkit/src/query/core/buildMiddleware/types";
 

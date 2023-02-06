@@ -47,27 +47,38 @@ const MatchesSublist = ({matches}: IMatches) => {
 }
 
 const MatchCell: NextPage<MatchProps> = ({match}) => {
+    const {team1, team2, matchEvent, matchType} = match;
+    const time = new Date(Date.parse(match.date)).toTimeString().slice(0, 5);
+
+    const [hydrated, setHydrated] = React.useState(false);
+    React.useEffect(() => {
+        setHydrated(true);
+    }, []);
+    if (!hydrated) {
+        return null;
+    }
+
     return (
         <div className={styles.match}>
             <table>
                 <tbody>
                 <tr>
                     <td className={styles.match_info}>
-                        <div className={styles.match_time}>{match.time}</div>
+                        <div className={styles.match_time}>{time}</div>
                         <div className={styles.match_meta}>{match.meta}</div>
                     </td>
-                    <TeamCell teamType={'team1'} teamInfo={match.team1}/>
+                    <TeamCell teamType={'team1'} teamInfo={team1}/>
                     <td className={styles.score}>
                         <span className={styles.dash}>vs</span>
                     </td>
-                    <TeamCell teamType={'team2'} teamInfo={match.team2}/>
+                    <TeamCell teamType={'team2'} teamInfo={team2}/>
                     <td className={styles.match_additional}>
                         <Image
-                            src={match.matchEvent.logo}
-                            alt={match.matchEvent.name}
+                            src={matchEvent.logo}
+                            alt={matchEvent.name}
                             width={30}
                             height={30}/>
-                        <span className={styles.match_type}>{match.matchType}</span>
+                        <span className={styles.match_type}>{matchType}</span>
                     </td>
                 </tr>
                 </tbody>
