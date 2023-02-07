@@ -8,6 +8,7 @@ import {selectMatches} from "@/store/matches/matchesSlice";
 import {IMatches} from "@/store/matches/matches.types";
 import {useSelector} from "react-redux";
 import {MatchProps, TeamCellProps} from "@/types/types";
+import Link from "next/link";
 
 
 const Matches: NextPage = () => {
@@ -60,29 +61,32 @@ const MatchCell: NextPage<MatchProps> = ({match}) => {
 
     return (
         <div className={styles.match}>
-            <table>
-                <tbody>
-                <tr>
-                    <td className={styles.match_info}>
-                        <div className={styles.match_time}>{time}</div>
-                        <div className={styles.match_meta}>{match.meta}</div>
-                    </td>
-                    <TeamCell teamType={'team1'} teamInfo={team1}/>
-                    <td className={styles.score}>
-                        <span className={styles.dash}>vs</span>
-                    </td>
-                    <TeamCell teamType={'team2'} teamInfo={team2}/>
-                    <td className={styles.match_additional}>
-                        <Image
-                            src={matchEvent.logo}
-                            alt={matchEvent.name}
-                            width={30}
-                            height={30}/>
-                        <span className={styles.match_type}>{matchType}</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <Link style={{width: '100%'}} href={`match/${match.id}`}>
+                <table>
+
+                    <tbody>
+                    <tr>
+                        <td className={styles.match_info}>
+                            <div className={styles.match_time}>{time}</div>
+                            <div className={styles.match_meta}>{match.meta}</div>
+                        </td>
+                        <TeamCell teamType={'team1'} teamInfo={team1}/>
+                        <td className={styles.score}>
+                            <span className={styles.dash}>vs</span>
+                        </td>
+                        <TeamCell teamType={'team2'} teamInfo={team2}/>
+                        <td className={styles.match_additional}>
+                            <Image
+                                src={matchEvent.logo}
+                                alt={matchEvent.name}
+                                width={30}
+                                height={30}/>
+                            <span className={styles.match_type}>{matchType}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </Link>
         </div>
     )
 }

@@ -1,6 +1,7 @@
 export interface ITeam {
     name: string;
     logo: string;
+    country: string;
 }
 
 export interface ITeamScore {

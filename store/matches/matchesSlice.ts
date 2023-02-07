@@ -10,11 +10,13 @@ const initialState: IMatches = {
             date: 'Mon, 10 Feb 2023 14:00:00 GMT',
             team1: {
                 name: 'Natus Vincere',
-                logo: 'https://svgur.com/i/pvM.svg'
+                logo: 'https://svgur.com/i/pvM.svg',
+                country: 'UA'
             },
             team2: {
                 name: 'G2',
-                logo: 'https://i.imgur.com/3oqItcT.png'
+                logo: 'https://i.imgur.com/3oqItcT.png',
+                country: 'EU'
             },
             score: {
                 main: {
@@ -37,11 +39,13 @@ const initialState: IMatches = {
             date: 'Mon, 10 Feb 2023 14:00:00 GMT',
             team1: {
                 name: 'Natus Vincere',
-                logo: 'https://svgur.com/i/pvM.svg'
+                logo: 'https://svgur.com/i/pvM.svg',
+                country: 'Ukraine'
             },
             team2: {
                 name: 'G2',
-                logo: 'https://i.imgur.com/3oqItcT.png'
+                logo: 'https://i.imgur.com/3oqItcT.png',
+                country: 'Europe'
             },
             score: {
                 main: {

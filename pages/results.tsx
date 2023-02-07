@@ -10,6 +10,7 @@ import {NextPage} from "next";
 import {IMatches} from "@/store/matches/matches.types";
 import {MatchProps, TeamCellProps} from "@/types/types";
 import {TimeoutId} from "@reduxjs/toolkit/src/query/core/buildMiddleware/types";
+import Link from "next/link";
 
 const Results: NextPage = () => {
     const matches = useSelector(selectMatches);
@@ -88,49 +89,51 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
         <div className={styles.result}
              onMouseEnter={onMouseEnter}
              onMouseLeave={onMouseLeave}>
-            <table>
-                <tbody>
-                <tr>
-                    <TeamCell teamType={'team1'} isWon={true} teamInfo={team1}/>
-                    <td className={styles.score}>
-                        <div className={styles.score_wrapper}>
-                            {isHover
-                                ?
-                                <div className={styles.detailed_score}>
-                                    {mapsScore}
-                                </div>
-                                :
-                                <div className={styles.main_score}>
+            <Link style={{width: '100%'}} href={`match/${match.id}`}>
+                <table>
+                    <tbody>
+                    <tr>
+                        <TeamCell teamType={'team1'} isWon={true} teamInfo={team1}/>
+                        <td className={styles.score}>
+                            <div className={styles.score_wrapper}>
+                                {isHover
+                                    ?
+                                    <div className={styles.detailed_score}>
+                                        {mapsScore}
+                                    </div>
+                                    :
+                                    <div className={styles.main_score}>
                                     <span className={`${clsx({
                                         [styles.score_won]: score.main.team1 > score.main.team2,
                                         [styles.score_lost]: score.main.team1 < score.main.team2,
                                         [styles.score_draw]: score.main.team1 === score.main.team2,
                                     })}`}>{match.score.main.team1}</span>
-                                    <span className={styles.dash}>-</span>
-                                    <span className={`${clsx({
-                                        [styles.score_won]: score.main.team2 > score.main.team1,
-                                        [styles.score_lost]: score.main.team2 < score.main.team1,
-                                        [styles.score_draw]: score.main.team2 === score.main.team1,
-                                    })}`}>{match.score.main.team2}</span>
-                                </div>}
-                        </div>
-                    </td>
-                    <TeamCell teamType={'team2'} teamInfo={team2}/>
-                    <td className={styles.event}>
-                        <Image
-                            src={matchEvent.logo}
-                            alt={matchEvent.name}
-                            width={30}
-                            height={30}/>
-                        <span className={styles.event_name}>{matchEvent.name}</span>
-                    </td>
-                    <td className={styles.match_type}>
-                        <div>{matchType}</div>
-                        <div>{match.meta}</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                                        <span className={styles.dash}>-</span>
+                                        <span className={`${clsx({
+                                            [styles.score_won]: score.main.team2 > score.main.team1,
+                                            [styles.score_lost]: score.main.team2 < score.main.team1,
+                                            [styles.score_draw]: score.main.team2 === score.main.team1,
+                                        })}`}>{match.score.main.team2}</span>
+                                    </div>}
+                            </div>
+                        </td>
+                        <TeamCell teamType={'team2'} teamInfo={team2}/>
+                        <td className={styles.event}>
+                            <Image
+                                src={matchEvent.logo}
+                                alt={matchEvent.name}
+                                width={30}
+                                height={30}/>
+                            <span className={styles.event_name}>{matchEvent.name}</span>
+                        </td>
+                        <td className={styles.match_type}>
+                            <div>{matchType}</div>
+                            <div>{match.meta}</div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </Link>
         </div>
     )
 }
