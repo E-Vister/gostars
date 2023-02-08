@@ -63,7 +63,6 @@ const MatchCell: NextPage<MatchProps> = ({match}) => {
         <div className={styles.match}>
             <Link style={{width: '100%'}} href={`match/${match.id}`}>
                 <table>
-
                     <tbody>
                     <tr>
                         <td className={styles.match_info}>

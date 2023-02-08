@@ -6,10 +6,17 @@ import {NextPage} from "next";
 import {useRouter} from "next/router";
 import Image from "next/image";
 import Spacer from "@/components/spacer";
+import Bo3Pattern from "@/components/match/bo3-pattern";
+import {useSelector} from "react-redux";
+import {selectMatches} from "@/store/matches/matchesSlice";
+import UpcomingPattern from "@/components/match/upcoming-pattern";
+import Bo5Pattern from "@/components/match/bo5-pattern";
+import Bo1Pattern from "@/components/match/bo1-pattern";
 
 const Match: NextPage = () => {
     const router = useRouter()
-    const {id} = router.query
+    const id = router.query.id || 0;
+    const match = useSelector(selectMatches).find(match => match.id === +id);
 
     return (
         <>
@@ -66,9 +73,17 @@ const Match: NextPage = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className={styles.picks}>
+                            {(match && match.status === 'ended')
+                                ? match.meta === 'bo1'
+                                    ? <Bo1Pattern team1={match.team1} team2={match.team2} picks={match.picks}/>
+                                    : match.meta === 'bo3'
+                                        ? <Bo3Pattern team1={match.team1} team2={match.team2} picks={match.picks}/>
+                                        : <Bo3Pattern team1={match.team1} team2={match.team2} picks={match.picks}/>
+                                : <UpcomingPattern/>}
+                        </div>
+                        <div className={styles.maps}></div>
                     </div>
-                    <div className={styles.picks}></div>
-                    <div className={styles.maps}></div>
                 </div>
             </main>
         </>

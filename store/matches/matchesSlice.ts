@@ -6,7 +6,7 @@ import {IMatches} from "@/store/matches/matches.types";
 const initialState: IMatches = {
     matches: [
         {
-            id: 1,
+            id: 0,
             date: 'Mon, 10 Feb 2023 14:00:00 GMT',
             team1: {
                 name: 'Natus Vincere',
@@ -35,7 +35,7 @@ const initialState: IMatches = {
             status: 'upcoming',
         },
         {
-            id: 2,
+            id: 1,
             date: 'Mon, 10 Feb 2023 14:00:00 GMT',
             team1: {
                 name: 'Natus Vincere',

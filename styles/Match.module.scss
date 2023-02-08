@@ -3,6 +3,7 @@
 .main {}
 
 .container {
+  padding: 10px 8px 0 6px;
 
   .wrapper {
     padding: 0 6px;
@@ -23,8 +24,8 @@
 
     border-radius: 16px;
 
-    background-color: rgb(14, 15, 17);
-    box-shadow: 0 0 2px 0 rgb(50 50 50 / 40%);
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 0 15px 1px rgba(34, 60, 80, 0.3);
 
     .team {
       display: flex;
@@ -52,7 +53,7 @@
         transform: translateY(-50%);
 
         object-fit: none;
-        opacity: .2;
+        opacity: .5;
         z-index: 1;
 
         &.team1 {
@@ -62,7 +63,7 @@
         }
 
         &.team2 {
-          right: -6.5%;
+          right: 0;
           border-bottom-right-radius: 16px;
           border-top-right-radius: 16px;
         }
@@ -81,7 +82,7 @@
         margin-left: auto;
         margin-right: auto;
 
-        background: linear-gradient(-90deg, rgba(8,165,0,0.7), rgba(27, 29, 33,0.1) 100%);
+        background: linear-gradient(-90deg, rgba(8,165,0,0.6) 0%, rgba(27, 29, 33,0.1) 100%);
 
         left: 0;
         right: 0;
@@ -103,7 +104,7 @@
         margin-left: auto;
         margin-right: auto;
 
-        background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1), rgba(228,10,10,0.7) 100%,);
+        background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%);
 
         left: 0;
         right: 0;
@@ -139,29 +140,30 @@
       flex-direction: column;
       flex-wrap: wrap;
       justify-content: space-around;
-      padding-top: 6px;
+      padding: 6px 8px 0 8px;
 
-      background: linear-gradient(90deg, rgba(8,165,0,0.7) 0%, rgba(27, 29, 33,0.7) 16%, rgba(27, 29, 33,0.7) 84%, rgba(228,10,10,0.7) 100%);
+      background: linear-gradient(90deg, rgba(8,165,0,0.3) 0%, rgba(27, 29, 33,0.7) 6%, rgba(27, 29, 33,0.7) 94%, rgba(228,10,10,0.3) 100%);
       text-align: center;
 
-      max-width: 33%;
+      max-width: 38.5%;
 
       .heading {
         font-weight: 700;
         font-size: 36px;
         max-width: 100%;
         font-family: Open Sans,sans-serif;
-        color: #c3c6ce;
       }
 
       .date {
-        font-size: 10px;
+        font-size: 11px;
         max-width: 100%;
       }
 
       .event_name {
         font-size: 12px;
         max-width: 100%;
+        color: rgb(9, 74, 103);
+        font-weight: 600;
       }
 
       .countdown {
@@ -169,14 +171,161 @@
         font-weight: 700;
         max-width: 100%;
         margin-bottom: 4px;
-        font-family: Open Sans,sans-serif;
-        color: #c3c6ce;
       }
     }
   }
 
   .picks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
+    position: relative;
+    box-sizing: border-box;
+
+    margin-top: 20px;
+    width: 100%;
+
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;  /* Safari and Chrome */
+    }
+
+    .pick_card {
+      display: flex;
+      flex-direction: column;
+
+      position: relative;
+
+      text-align: center;
+
+      box-shadow: 5px 5px 15px 2px rgba(34, 60, 80, 0.3);
+      width: 120px;
+
+      &:first-child {
+        .pick_status {
+          border-top-left-radius: 16px;
+        }
+        margin-left: 0 !important;
+        border-top-left-radius: 16px;
+      }
+
+      &:last-child {
+        .map_banner {
+          border-bottom-right-radius: 16px;
+        }
+
+        .gradient {
+          border-bottom-right-radius: 16px;
+        }
+
+        border-bottom-right-radius: 16px;
+      }
+
+      .pick_status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+
+        font-weight: 800;
+        font-family: Open Sans,sans-serif;
+        font-size: 11px;
+
+        min-height: 22px;
+
+        color: rgba(240, 248, 255, 1.00);
+        background-color: rgb(8, 57, 77);
+
+        &.banned {
+          color: rgb(142, 11, 59);
+          background-color: rgb(1, 22, 54);
+        }
+      }
+
+      .map_name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        font-size: 12px;
+
+        min-height: 22px;
+
+        color: black;
+        background-color: rgba(240, 248, 255, 1.00);
+
+        &.banned {
+          color: rgb(145, 145, 145);
+        }
+      }
+
+      .banner_box {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: center;
+
+        position: relative;
+        overflow: hidden;
+
+        width: 120px;
+        height: 67.5px;
+
+        .map_banner {
+          position: absolute;
+          max-width: 100%;
+          z-index: 1;
+
+          &.placeholder {
+            filter: saturate(0);
+          }
+        }
+
+        .gradient {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          position: absolute;
+
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.1);
+
+
+          &.banned {
+            background-color: rgba(1, 22, 54, 0.7);
+          }
+
+          &.decider {
+            .pick_team_logo {
+              opacity: 0;
+            }
+          }
+
+          z-index: 2;
+        }
+
+        .pick_team_logo {
+          align-self: center;
+
+          max-width: 50px;
+          max-height: 50px;
+          width: auto;
+          height: auto;
+
+          opacity: 0.9;
+
+          z-index: 3;
+        }
+      }
+    }
   }
 
   .maps {
@@ -184,10 +333,15 @@
   }
 }
 
-@media (max-width: 908px) {
-  .team_country {
-    &.team2 {
-      right: 0 !important;
+@media (max-width: 1000px) {
+  .picks {
+    padding: 10px 5px 25px 5px;
+    margin-top: 12px !important;
+
+    overflow-x: scroll;
+
+    .pick_card {
+      margin-left: 20px;
     }
   }
 }
@@ -204,6 +358,7 @@
     .matchInfo {
       max-width: 44% !important;
       padding-top: 8px !important;
+      background: rgba(27, 29, 33,0.7) !important;
 
       .heading {
         font-size: 35px !important;
@@ -234,6 +389,16 @@
       &.team2 {
         height: 140px !important;
       }
+    }
+
+    .team1_gradient {
+      background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(8,165,0,0.6) 100%) !important;
+      border-bottom-left-radius: 16px;
+    }
+
+    .team2_gradient {
+      background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%) !important;
+      border-bottom-right-radius: 16px;
     }
 
     .team_logo {

@@ -9,3 +9,18 @@ export type TeamCellProps = {
 export type MatchProps = {
     match: IMatch
 }
+
+export type PickCardProps = {
+    teamName?: string,
+    teamLogo?: string,
+    map?: string,
+    banned?: true,
+    decider?: true,
+    upcoming?: true,
+}
+
+export type BestOfXPageProps = {
+    team1: ITeam
+    team2: ITeam
+    picks: string[]
+}
