@@ -67,7 +67,7 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
         }, 500)
     }
 
-    const mapsScore = score.detailed.map((mapInfo) => {
+    const mapsScore = score.maps.map((mapInfo) => {
         return (
             <div className={styles.map_score} key={`${mapInfo.map}-${match.id}`}>
                 <span className={`${clsx({

@@ -9,6 +9,8 @@
     padding: 0 6px;
   }
 
+  /* ------------ Score ------------- */
+
   .scoreBox {
     display: flex;
     flex-direction: row;
@@ -26,6 +28,12 @@
 
     background-color: rgb(0, 0, 0);
     box-shadow: 0 0 15px 1px rgba(34, 60, 80, 0.3);
+
+    &.upcoming {
+      .match_info {
+        background: linear-gradient(90deg, rgba(9, 74, 103, 0.3) 0%, rgba(27, 29, 33,0.7) 6%, rgba(27, 29, 33,0.7) 94%, rgba(9, 74, 103,0.3) 100%) ;
+      }
+    }
 
     .team {
       display: flex;
@@ -69,7 +77,7 @@
         }
       }
 
-      .team1_gradient {
+      .score_gradient {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -82,35 +90,27 @@
         margin-left: auto;
         margin-right: auto;
 
-        background: linear-gradient(-90deg, rgba(8,165,0,0.6) 0%, rgba(27, 29, 33,0.1) 100%);
-
         left: 0;
         right: 0;
         top: 50%;
         transform: translateY(-50%);
         z-index: 2;
-      }
 
-      .team2_gradient {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        &.team1_gradient {
+          background: linear-gradient(-90deg, rgba(9, 74, 103,0.6) 0%, rgba(27, 29, 33,0.1) 100%) ;
+        }
 
-        position: absolute;
+        &.team2_gradient {
+          background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1) 0%, rgba(9, 74, 103,0.6) 100%) ;
+        }
 
-        width: 100%;
-        height: 100%;
+        &.team1_gradient.ended {
+          background: linear-gradient(-90deg, rgba(8,165,0,0.6) 0%, rgba(27, 29, 33,0.1) 100%);
+        }
 
-        margin-left: auto;
-        margin-right: auto;
-
-        background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%);
-
-        left: 0;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 2;
+        &.team2_gradient.ended {
+          background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%);
+        }
       }
 
       .team_logo {
@@ -134,7 +134,7 @@
       }
     }
 
-    .matchInfo {
+    .match_info {
       display: flex;
       flex-grow: 1;
       flex-direction: column;
@@ -167,12 +167,31 @@
       }
 
       .countdown {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         font-size: 16px;
         font-weight: 700;
         max-width: 100%;
         margin-bottom: 4px;
       }
     }
+  }
+
+
+
+  /* ------------ Picks ------------- */
+
+  .paragraph_heading {
+    display: flex;
+
+    margin-top: 15px;
+    margin-bottom: 5px;
+    padding-left: 5px;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
   }
 
   .picks {
@@ -183,7 +202,7 @@
     position: relative;
     box-sizing: border-box;
 
-    margin-top: 20px;
+    margin-bottom: 30px;
     width: 100%;
 
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -334,9 +353,13 @@
 }
 
 @media (max-width: 1000px) {
+  .paragraph_heading {
+    margin-top: 13px !important;
+  }
+
   .picks {
-    padding: 10px 5px 25px 5px;
-    margin-top: 12px !important;
+    padding: 0 5px 18px 5px;
+    margin-bottom: 0 !important;
 
     overflow-x: scroll;
 
@@ -345,6 +368,10 @@
     }
   }
 }
+
+
+
+/* ------------ Mobiles ------------- */
 
 @media (max-width: 500px) {
   .wrapper {
@@ -355,7 +382,47 @@
     min-height: 139px !important;
     margin-top: 4px !important;
 
-    .matchInfo {
+    .team_country {
+      &.team1 {
+        height: 140px !important;
+      }
+
+      &.team2 {
+        height: 140px !important;
+      }
+    }
+
+    .score_gradient {
+      &.team1_gradient {
+        background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(9, 74, 103,0.6) 100%) !important;
+        border-bottom-left-radius: 13px;
+      }
+
+      &.team2_gradient {
+        background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(9, 74, 103,0.6) 100%) !important;
+        border-bottom-right-radius: 13px;
+      }
+
+      &.team1_gradient.ended {
+        background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(8,165,0,0.6) 100%) !important;
+      }
+
+      &.team2_gradient.ended {
+        background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%) !important;
+      }
+    }
+
+    .team_logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    .team_name {
+      font-size: 15px !important;
+      padding: 0 7px;
+    }
+
+    .match_info {
       max-width: 44% !important;
       padding-top: 8px !important;
       background: rgba(27, 29, 33,0.7) !important;
@@ -379,36 +446,6 @@
         font-size: 15px !important;
         padding: 0 22px;
       }
-    }
-
-    .team_country {
-      &.team1 {
-        height: 140px !important;
-      }
-
-      &.team2 {
-        height: 140px !important;
-      }
-    }
-
-    .team1_gradient {
-      background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(8,165,0,0.6) 100%) !important;
-      border-bottom-left-radius: 16px;
-    }
-
-    .team2_gradient {
-      background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%) !important;
-      border-bottom-right-radius: 16px;
-    }
-
-    .team_logo {
-      width: 50px;
-      height: 50px;
-    }
-
-    .team_name {
-      font-size: 15px !important;
-      padding: 0 7px;
     }
   }
 }

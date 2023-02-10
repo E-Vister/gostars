@@ -12,7 +12,7 @@ export interface ITeamScore {
 
 export interface IScore {
     main: IMainScore;
-    detailed: IDetailedScore[];
+    maps: IDetailedScore[];
 }
 
 export interface IMainScore {
@@ -31,6 +31,7 @@ export interface IDetailedScore {
 interface IMatchEvent {
     name: string;
     logo: string;
+    live: string;
 }
 
 export interface IMatch {

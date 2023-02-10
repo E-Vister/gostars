@@ -7,7 +7,7 @@ const initialState: IMatches = {
     matches: [
         {
             id: 0,
-            date: 'Mon, 10 Feb 2023 14:00:00 GMT',
+            date: 'Mon, 10 Feb 2023 18:30:00 GMT',
             team1: {
                 name: 'Natus Vincere',
                 logo: 'https://svgur.com/i/pvM.svg',
@@ -23,13 +23,14 @@ const initialState: IMatches = {
                     team1: 0,
                     team2: 0,
                 },
-                detailed: []
+                maps: []
             },
             picks: [],
             matchType: 'LAN',
             matchEvent: {
                 name: 'BLAST Premier Spring Groups 2023',
-                logo: 'https://i.imgur.com/t1HQOz0.png'
+                logo: 'https://i.imgur.com/t1HQOz0.png',
+                live: 'https://player.twitch.tv/?channel=esl_csgo&parent=localhost',
             },
             meta: 'bo3',
             status: 'upcoming',
@@ -40,25 +41,25 @@ const initialState: IMatches = {
             team1: {
                 name: 'Natus Vincere',
                 logo: 'https://svgur.com/i/pvM.svg',
-                country: 'Ukraine'
+                country: 'UA'
             },
             team2: {
                 name: 'G2',
                 logo: 'https://i.imgur.com/3oqItcT.png',
-                country: 'Europe'
+                country: 'EU'
             },
             score: {
                 main: {
                     team1: 2,
                     team2: 1,
                 },
-                detailed: [
+                maps: [
                     {
                         team1: {totalScore: 16, tSideScore: 11, ctSideScore: 5},
                         team2: {totalScore: 4, tSideScore: 0, ctSideScore: 4},
                         map: 'Nuke',
                         pickedBy: 'team1',
-                        won: 'team1'
+                        won: 'team1',
                     },
                     {
                         team1: {totalScore: 14, tSideScore: 7, ctSideScore: 7},
@@ -80,7 +81,8 @@ const initialState: IMatches = {
             matchType: 'LAN',
             matchEvent: {
                 name: 'BLAST Premier Spring Groups 2023',
-                logo: 'https://i.imgur.com/t1HQOz0.png'
+                logo: 'https://i.imgur.com/t1HQOz0.png',
+                live: 'https://player.twitch.tv/?channel=esl_csgo&parent=localhost',
             },
             meta: 'bo3',
             status: 'ended'
