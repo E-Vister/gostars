@@ -1,4 +1,4 @@
-import {IMatch, ITeam} from "@/store/matches/matches.types";
+import {IMap, IMatch, ITeam} from "@/store/matches/matches.types";
 
 export type TeamCellProps = {
     teamType: 'team1' | 'team2',
@@ -23,4 +23,9 @@ export type BestOfXPageProps = {
     team1: ITeam
     team2: ITeam
     picks: string[]
+}
+
+export type ITeams = {
+    team1: ITeam;
+    team2: ITeam;
 }

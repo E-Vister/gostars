@@ -69,7 +69,7 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
 
     const mapsScore = score.maps.map((mapInfo) => {
         return (
-            <div className={styles.map_score} key={`${mapInfo.map}-${match.id}`}>
+            <div className={styles.map_score} key={`${mapInfo.name}-${match.id}`}>
                 <span className={`${clsx({
                     [styles.score_won]: mapInfo.team1.totalScore > mapInfo.team2.totalScore,
                     [styles.score_lost]: mapInfo.team1.totalScore < mapInfo.team2.totalScore,

@@ -1,4 +1,4 @@
-import PickCard from "@/components/match/pick-card";
+import PickCard from "@/components/match/picks/pick-card";
 import React from "react";
 import {NextPage} from "next";
 

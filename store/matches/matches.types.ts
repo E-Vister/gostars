@@ -12,7 +12,7 @@ export interface ITeamScore {
 
 export interface IScore {
     main: IMainScore;
-    maps: IDetailedScore[];
+    maps: IMap[];
 }
 
 export interface IMainScore {
@@ -20,10 +20,10 @@ export interface IMainScore {
     team2: number;
 }
 
-export interface IDetailedScore {
+export interface IMap {
     team1: ITeamScore;
     team2: ITeamScore;
-    map: 'Vertigo' | 'Overpass' | 'Nuke' | 'Mirage' | 'Ancient' | 'Inferno' | 'Anubis';
+    name: 'Vertigo' | 'Overpass' | 'Nuke' | 'Mirage' | 'Ancient' | 'Inferno' | 'Anubis';
     pickedBy: 'team1' | 'team2' | 'decider';
     won: 'team1' | 'team2' | 'draw';
 }

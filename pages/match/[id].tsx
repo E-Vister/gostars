@@ -4,21 +4,22 @@ import React from "react";
 import styles from '@/styles/Match.module.scss';
 import {NextPage} from "next";
 import {useRouter} from "next/router";
-import Bo3Pattern from "@/components/match/bo3-pattern";
+import Bo3Pattern from "@/components/match/picks/bo3-pattern";
 import {useSelector} from "react-redux";
 import {selectMatches} from "@/store/matches/matchesSlice";
 import UpcomingPattern from "@/components/match/upcoming-pattern";
-import Bo5Pattern from "@/components/match/bo5-pattern";
-import Bo1Pattern from "@/components/match/bo1-pattern";
+import Bo5Pattern from "@/components/match/picks/bo5-pattern";
+import Bo1Pattern from "@/components/match/picks/bo1-pattern";
 import ScoreBox from "@/components/match/score-box";
 import YoutubeEmbed from "@/components/youtube-embed";
+import Maps from "@/components/match/maps/maps";
 
 const Match: NextPage = () => {
     const router = useRouter()
     const id = router.query.id || 0;
     const match = useSelector(selectMatches).find(match => match.id === +id);
 
-    if(!match) {
+    if (!match) {
         router.push('/404');
         return <div></div>
     }
@@ -51,9 +52,15 @@ const Match: NextPage = () => {
                                 : <UpcomingPattern/>}
                         </div>
 
-                        <div className={styles.maps}></div>
-
                         <span className={styles.paragraph_heading}>
+                            Maps
+                        </span>
+                        <Maps maps={match.score.maps}
+                              teams={{team1: match.team1, team2: match.team2}}
+                              meta={match.meta}/>
+
+                        <span style={{paddingBottom: `5px`, marginTop: '0px !important'}}
+                              className={styles.paragraph_heading}>
                             {`Watch ${match.team1.name} vs. ${match.team2.name}`}
                         </span>
                         <YoutubeEmbed embedId={`6ASq2clrbs8?start=33200`}/>

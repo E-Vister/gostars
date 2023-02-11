@@ -27,7 +27,7 @@ const PickCard: NextPage<PickCardProps> = (
             })}`}>
                 {map ? map.toUpperCase() : `TBA`}
             </div>
-            <div className={styles.banner_box}>
+            <div className={styles.pick_banner_box}>
                 <Image src={map ? `/static/maps/de_${map.toLowerCase()}.jpg` : '/static/maps/de_mirage.jpg'}
                        alt={'map-banner'}
                        className={`${styles.map_banner} ${clsx({
