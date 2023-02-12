@@ -41,7 +41,8 @@ const MapCard: NextPage<MapPickProps> = ({map, teams}) => {
                     alt={map?.name || `Map`}
                     className={styles.map_banner}
                     width={160}
-                    height={200}/>
+                    height={200}
+                    priority/>
                 <div className={`${styles.picked_by} ${clsx({
                     [styles.decider]: map?.pickedBy === 'decider'
                 })}`}>
@@ -70,7 +71,7 @@ const MapCard: NextPage<MapPickProps> = ({map, teams}) => {
                             {map ? totalSidesScore[0] > 15
                                 ? halfScores[0] : halfScores[1] : '-'}
                             <span>, </span>
-                            {map ? totalSidesScore[0] < 15
+                            {map ? totalSidesScore[0] <= 15
                                 ? halfScores[0] : halfScores[1] : '-'}
                             <span>)</span>
                         </div>

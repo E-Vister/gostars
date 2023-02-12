@@ -29,13 +29,16 @@ const ScoreBox: NextPage<Props> = ({match}) => {
             [styles.upcoming]: match.status === 'upcoming',
         })}`}>
             <div className={styles.team}>
-                <Image src={'https://i.imgur.com/nuR1QQ5.png'}
-                       alt={'team1country'}
+                <Image src={`/static/flags/${match.team1.country}.png`}
+                       alt={match.team1.country}
                        className={`${styles.team_country} ${styles.team1}`}
                        width={300}
-                       height={180}/>
+                       height={180}
+                       priority/>
                 <div className={`${styles.score_gradient} ${styles.team1_gradient} ${clsx({
                     [styles.ended]: match.status === 'ended',
+                    [styles.lost]: match.score.main.team1 < match.score.main.team2,
+                    [styles.won]: match.score.main.team1 > match.score.main.team2
                 })}`}>
                     <Image src={match.team1.logo}
                            alt={match.team1.name}
@@ -47,7 +50,10 @@ const ScoreBox: NextPage<Props> = ({match}) => {
                     <div className={styles.team_name}>{match.team1.name}</div>
                 </div>
             </div>
-            <div className={styles.match_info}>
+            <div className={`${styles.match_info} ${clsx({
+                [styles.right_won]: match.status === 'ended' && match.score.main.team1 < match.score.main.team2,
+                [styles.left_won]: match.status === 'ended' && match.score.main.team1 > match.score.main.team2
+            })}`}>
                 <div className={styles.heading}>
                     {match.status === 'upcoming'
                         ? time
@@ -63,13 +69,16 @@ const ScoreBox: NextPage<Props> = ({match}) => {
                 </div>
             </div>
             <div className={styles.team}>
-                <Image src={'https://i.imgur.com/JEIaAt6.png'}
-                       alt={'team2country'}
+                <Image src={`/static/flags/${match.team2.country}.png`}
+                       alt={match.team2.country}
                        className={`${styles.team_country} ${styles.team2}`}
                        width={300}
-                       height={180}/>
+                       height={180}
+                       priority/>
                 <div className={`${styles.score_gradient} ${styles.team2_gradient} ${clsx({
                     [styles.ended]: match.status === 'ended',
+                    [styles.lost]: match.score.main.team2 < match.score.main.team1,
+                    [styles.won]: match.score.main.team2 > match.score.main.team1
                 })}`}>
                     <Image src={match.team2.logo}
                            alt={match.team2.name}

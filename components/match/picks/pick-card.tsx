@@ -34,7 +34,8 @@ const PickCard: NextPage<PickCardProps> = (
                            [styles.placeholder]: !map,
                        })}`}
                        width={120}
-                       height={67.5}/>
+                       height={67.5}
+                       priority/>
                 <div className={`${styles.gradient} ${clsx({
                     [styles.banned]: banned,
                     [styles.decider]: decider || upcoming,
