@@ -1,6 +1,7 @@
 @import 'common/main-layout';
 
-.main {}
+.main {
+}
 
 .container {
   padding: 10px 8px 0 6px;
@@ -32,7 +33,7 @@
 
     &.upcoming {
       .match_info {
-        background: linear-gradient(90deg, rgba(9, 74, 103, 0.3) 0%, rgba(27, 29, 33,0.7) 6%, rgba(27, 29, 33,0.7) 94%, rgba(9, 74, 103,0.3) 100%) ;
+        background: linear-gradient(90deg, rgba(9, 74, 103, 0.3) 0%, rgba(27, 29, 33, 0.7) 6%, rgba(27, 29, 33, 0.7) 94%, rgba(9, 74, 103, 0.3) 100%);
       }
     }
 
@@ -62,7 +63,7 @@
         transform: translateY(-50%);
 
         object-fit: none;
-        opacity: .5;
+        opacity: .6;
         z-index: 1;
 
         &.team1 {
@@ -98,30 +99,30 @@
         z-index: 2;
 
         &.team1_gradient {
-          background: linear-gradient(-90deg, rgba(9, 74, 103,0.6) 0%, rgba(27, 29, 33,0.1) 100%) ;
+          background: linear-gradient(-90deg, rgba(9, 74, 103, 0.6) 0%, rgba(27, 29, 33, 0.1) 100%);
         }
 
         &.team2_gradient {
-          background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1) 0%, rgba(9, 74, 103,0.6) 100%) ;
+          background: linear-gradient(-90deg, rgba(27, 29, 33, 0.1) 0%, rgba(9, 74, 103, 0.6) 100%);
         }
 
         &.team1_gradient.ended {
           &.lost {
-            background: linear-gradient(-90deg, rgba(228,10,10,0.6) 0%, rgba(27, 29, 33,0.1) 100%);
+            background: linear-gradient(-90deg, rgba(228, 10, 10, 0.5) 0%, rgba(27, 29, 33, 0.1) 100%);
           }
 
           &.won {
-            background: linear-gradient(-90deg, rgba(8,165,0,0.6) 0%, rgba(27, 29, 33,0.1) 100%);
+            background: linear-gradient(-90deg, rgba(8, 165, 0, 0.5) 0%, rgba(27, 29, 33, 0.1) 100%);
           }
         }
 
         &.team2_gradient.ended {
           &.lost {
-            background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%);
+            background: linear-gradient(-90deg, rgba(27, 29, 33, 0.1) 0%, rgba(228, 10, 10, 0.5) 100%);
           }
 
           &.won {
-            background: linear-gradient(-90deg,  rgba(27, 29, 33,0.1) 0%, rgba(8,165,0,0.6) 100%);
+            background: linear-gradient(-90deg, rgba(27, 29, 33, 0.1) 0%, rgba(8, 165, 0, 0.5) 100%);
           }
         }
       }
@@ -139,11 +140,15 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-family: Open Sans,sans-serif;
+        font-family: Open Sans, sans-serif;
         font-weight: 700;
         font-size: 17px;
 
         z-index: 3;
+      }
+
+      .win_indicator {
+        display: none;
       }
     }
 
@@ -161,18 +166,18 @@
       max-width: 38.5%;
 
       &.left_won {
-        background: linear-gradient(90deg, rgba(8,165,0,0.3) 0%, rgba(27, 29, 33,0.7) 6%, rgba(27, 29, 33,0.7) 94%, rgba(228,10,10,0.3) 100%);
+        background: linear-gradient(90deg, rgba(8, 165, 0, 0.3) 0%, rgba(27, 29, 33, 0.7) 6%, rgba(27, 29, 33, 0.7) 94%, rgba(228, 10, 10, 0.3) 100%);
       }
 
       &.right_won {
-        background: linear-gradient(90deg, rgba(228,10,10,0.3) 0%, rgba(27, 29, 33,0.7) 6%, rgba(27, 29, 33,0.7) 94%, rgba(8,165,0,0.3) 100%);
+        background: linear-gradient(90deg, rgba(228, 10, 10, 0.3) 0%, rgba(27, 29, 33, 0.7) 6%, rgba(27, 29, 33, 0.7) 94%, rgba(8, 165, 0, 0.3) 100%);
       }
 
       .heading {
         font-weight: 700;
         font-size: 36px;
         max-width: 100%;
-        font-family: Open Sans,sans-serif;
+        font-family: Open Sans, sans-serif;
       }
 
       .date {
@@ -200,7 +205,6 @@
   }
 
 
-
   /* ------------ Picks ------------- */
 
   .paragraph_heading {
@@ -226,11 +230,11 @@
     margin-top: 5px;
     width: 100%;
 
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
 
     &::-webkit-scrollbar {
-      display: none;  /* Safari and Chrome */
+      display: none; /* Safari and Chrome */
     }
 
     .pick_card {
@@ -248,6 +252,7 @@
         .pick_status {
           border-top-left-radius: 16px;
         }
+
         margin-left: 0 !important;
         border-top-left-radius: 16px;
       }
@@ -271,7 +276,7 @@
         flex-grow: 1;
 
         font-weight: 800;
-        font-family: Open Sans,sans-serif;
+        font-family: Open Sans, sans-serif;
         font-size: 11px;
 
         min-height: 22px;
@@ -369,7 +374,6 @@
   }
 
 
-
   /* ------------ Maps ------------- */
   .maps {
     display: flex;
@@ -385,12 +389,11 @@
     width: 100%;
 
     overflow-x: scroll;
-    -webkit-scroll-direction: horizontal;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
 
     &::-webkit-scrollbar {
-      display: none;  /* Safari and Chrome */
+      display: none; /* Safari and Chrome */
     }
 
     .map_card {
@@ -474,6 +477,7 @@
               margin-right: 2px;
             }
           }
+
           z-index: 2;
         }
       }
@@ -495,12 +499,12 @@
           justify-content: center;
 
           font-weight: 800;
-          font-family: Open Sans,sans-serif;
+          font-family: Open Sans, sans-serif;
           font-size: 13px;
 
           border-top-right-radius: 16px;
 
-          background: rgb(27, 29, 33, 0.9);
+          background: rgba(22, 23, 26, 0.8);
           color: rgb(240, 248, 255);
 
           width: 100%;
@@ -523,7 +527,7 @@
 
             .main_score {
               font-weight: 700;
-              font-family: Open Sans,sans-serif;
+              font-family: Open Sans, sans-serif;
               font-size: 22px;
             }
 
@@ -570,7 +574,6 @@
 }
 
 
-
 /* ------------ Mobiles ------------- */
 
 @media (max-width: 500px) {
@@ -586,6 +589,8 @@
 
     .team {
       .team_country {
+        opacity: .85 !important;
+
         &.team1 {
           height: 140px !important;
         }
@@ -597,21 +602,21 @@
 
       .score_gradient {
         &.team1_gradient {
-          background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(9, 74, 103,0.6) 100%) !important;
+          background: linear-gradient(180deg, rgba(27, 29, 33, 0.1) 0%, rgba(9, 74, 103, 0.6) 100%) !important;
           border-bottom-left-radius: 13px;
         }
 
         &.team2_gradient {
-          background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(9, 74, 103,0.6) 100%) !important;
+          background: linear-gradient(180deg, rgba(27, 29, 33, 0.1) 0%, rgba(9, 74, 103, 0.6) 100%) !important;
           border-bottom-right-radius: 13px;
         }
 
         &.team1_gradient.ended {
-          background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(8,165,0,0.6) 100%) !important;
+
         }
 
         &.team2_gradient.ended {
-          background: linear-gradient(180deg,  rgba(27, 29, 33,0.1) 0%, rgba(228,10,10,0.6) 100%) !important;
+
         }
       }
 
@@ -624,12 +629,34 @@
         font-size: 15px !important;
         padding: 0 7px;
       }
+
+      .win_indicator {
+        display: flex !important;
+        justify-content: center;
+        position: absolute;
+
+        top: 96%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 60px;
+        height: 2px;
+        background: rgba(0, 133, 190, 0.5);
+
+        &.won {
+          background: rgba(8, 165, 0, 0.8);
+        }
+
+        &.lost {
+          background: rgba(228, 10, 10, 0.8);
+        }
+      }
     }
 
     .match_info {
       max-width: 44% !important;
       padding-top: 8px !important;
-      background: rgba(27, 29, 33,0.7) !important;
+      background: rgba(27, 29, 33, 0.7) !important;
 
       .heading {
         font-size: 35px !important;

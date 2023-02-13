@@ -15,17 +15,18 @@ const Maps: NextPage<MapPicksProps> = ({maps, teams, meta}) => {
     let mapPicksElements: JSX.Element[] = [];
 
     if (maps && maps.length > 0) {
-        mapPicksElements = maps.map((item) => {
+        mapPicksElements = maps.map((item, index) => {
             return <MapCard key={`${item.name}-map`}
                             map={item}
                             teams={teams}
+                            id={index + 1}
             />
         })
     }
 
     if (maps && maps.length === 0) {
         for (let i = 0; i < +meta.slice(-1); i++) {
-            mapPicksElements.push(<MapCard key={`${i}-map`}/>);
+            mapPicksElements.push(<MapCard key={`${i}-map`} id={i + 1}/>);
         }
     }
 

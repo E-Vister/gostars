@@ -113,8 +113,13 @@
 }
 
 @media (max-width: 500px) {
+  .container {
+    padding: 12px 12px;
+  }
+
   .logo {
     margin-right: 18px !important;
+    padding-left: 0 !important;
   }
 
   .button {

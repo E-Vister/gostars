@@ -49,4 +49,6 @@ export interface IMatch {
 
 export interface IMatches {
     matches: IMatch[];
+    currentMatch?: IMatch;
+    loading?: 'idle' | 'pending';
 }

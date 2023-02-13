@@ -1,148 +1,54 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {AppState} from "../store";
+import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {AppState, AppThunk} from "../store";
 import {IMatches} from "@/store/matches/matches.types";
+import {matchesAPI} from "@/api/api";
 
 
 const initialState: IMatches = {
-    matches: [
-        {
-            id: 0,
-            date: 'Mon, 12 Feb 2023 18:30:00 GMT',
-            team1: {
-                name: 'Natus Vincere',
-                logo: 'https://svgur.com/i/pvM.svg',
-                country: 'UA'
-            },
-            team2: {
-                name: 'G2',
-                logo: 'https://i.imgur.com/3oqItcT.png',
-                country: 'EU'
-            },
-            score: {
-                main: {
-                    team1: 0,
-                    team2: 0,
-                },
-                maps: []
-            },
-            picks: [],
-            matchType: 'LAN',
-            matchEvent: {
-                name: 'BLAST Premier Spring Groups 2023',
-                logo: 'https://i.imgur.com/t1HQOz0.png',
-                live: 'https://player.twitch.tv/?channel=esl_csgo&parent=localhost',
-            },
-            meta: 'bo3',
-            status: 'upcoming',
-        },
-        {
-            id: 1,
-            date: 'Mon, 10 Feb 2023 14:00:00 GMT',
-            team1: {
-                name: 'Natus Vincere',
-                logo: 'https://svgur.com/i/pvM.svg',
-                country: 'UA'
-            },
-            team2: {
-                name: 'G2',
-                logo: 'https://i.imgur.com/3oqItcT.png',
-                country: 'EU'
-            },
-            score: {
-                main: {
-                    team1: 2,
-                    team2: 1,
-                },
-                maps: [
-                    {
-                        team1: {totalScore: 16, tSideScore: 11, ctSideScore: 5},
-                        team2: {totalScore: 4, tSideScore: 0, ctSideScore: 4},
-                        name: 'Nuke',
-                        pickedBy: 'team1',
-                        won: 'team1',
-                    },
-                    {
-                        team1: {totalScore: 14, tSideScore: 7, ctSideScore: 7},
-                        team2: {totalScore: 16, tSideScore: 8, ctSideScore: 8},
-                        name: 'Mirage',
-                        pickedBy: 'team2',
-                        won: 'team2'
-                    },
-                    {
-                        team1: {totalScore: 16, tSideScore: 6, ctSideScore: 10},
-                        team2: {totalScore: 12, tSideScore: 3, ctSideScore: 9},
-                        name: 'Anubis',
-                        pickedBy: 'decider',
-                        won: 'team1'
-                    },
-                ]
-            },
-            picks: ['Vertigo', 'Overpass', 'Nuke', 'Mirage', 'Ancient', 'Inferno', 'Anubis'],
-            matchType: 'LAN',
-            matchEvent: {
-                name: 'BLAST Premier Spring Groups 2023',
-                logo: 'https://i.imgur.com/t1HQOz0.png',
-                live: 'https://player.twitch.tv/?channel=esl_csgo&parent=localhost',
-            },
-            meta: 'bo3',
-            status: 'ended'
-        },
-        {
-            id: 2,
-            date: 'Tue, 7 Feb 2023 19:45:00 GMT',
-            team1: {
-                name: 'Natus Vincere',
-                logo: 'https://svgur.com/i/pvM.svg',
-                country: 'UA'
-            },
-            team2: {
-                name: 'G2',
-                logo: 'https://i.imgur.com/3oqItcT.png',
-                country: 'EU'
-            },
-            score: {
-                main: {
-                    team1: 0,
-                    team2: 2,
-                },
-                maps: [
-                    {
-                        team1: {totalScore: 8, tSideScore: 5, ctSideScore: 3},
-                        team2: {totalScore: 16, tSideScore: 12, ctSideScore: 4},
-                        name: 'Inferno',
-                        pickedBy: 'team1',
-                        won: 'team1',
-                    },
-                    {
-                        team1: {totalScore: 7, tSideScore: 0, ctSideScore: 7},
-                        team2: {totalScore: 16, tSideScore: 8, ctSideScore: 8},
-                        name: 'Nuke',
-                        pickedBy: 'team2',
-                        won: 'team2'
-                    },
-                ]
-            },
-            picks: ['Vertigo', 'Overpass', 'Inferno', 'Nuke', 'Anubis', 'Ancient', 'Mirage'],
-            matchType: 'LAN',
-            matchEvent: {
-                name: 'IEM Katowice 2023',
-                logo: 'https://i.imgur.com/9pq9MA4.png',
-                live: 'https://player.twitch.tv/?channel=esl_csgo&parent=localhost',
-            },
-            meta: 'bo3',
-            status: 'ended'
-        }
-    ]
+    matches: [],
+    currentMatch: undefined,
+    loading: "idle",
 };
 
 export const matchesSlice = createSlice({
     name: 'matches',
     initialState,
-    reducers: {}
+    reducers: {
+        onLoading(state) {
+            if (state.loading === 'idle') {
+                state.loading = 'pending'
+            }
+        },
+        matchesReceived(state, action) {
+            if (state.loading === 'pending') {
+                state.loading = 'idle'
+                state.matches = action.payload
+            }
+        },
+        matchReceived(state, action) {
+            if (state.loading === 'pending') {
+                state.loading = 'idle'
+                state.currentMatch = action.payload
+            }
+        },
+    }
 });
 
-export const {} = matchesSlice.actions;
+export const {onLoading, matchesReceived, matchReceived} = matchesSlice.actions;
+
+export const getMatches = (): AppThunk => async (dispatch) => {
+    dispatch(onLoading());
+    const response = await matchesAPI.getMatches();
+    dispatch(matchesReceived(response));
+}
+export const getMatchById = (id: number): AppThunk => async (dispatch) => {
+    dispatch(onLoading());
+    const response = await matchesAPI.getMatchById(id);
+    dispatch(matchReceived(response));
+}
 
 export const selectMatches = (state: AppState) => state.matches.matches;
+export const selectMatchesLoading = (state: AppState) => state.matches.matches;
+export const selectCurrentMatch = (state: AppState) => state.matches.currentMatch;
 
 export default matchesSlice.reducer;

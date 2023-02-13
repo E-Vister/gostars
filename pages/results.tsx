@@ -4,16 +4,37 @@ import React, {useState} from "react";
 import styles from '@/styles/Results.module.scss';
 import Image from "next/image";
 import {clsx} from 'clsx';
-import {useSelector} from "react-redux";
-import {selectMatches} from "@/store/matches/matchesSlice";
 import {NextPage} from "next";
-import {IMatches} from "@/store/matches/matches.types";
+import {IMatch, IMatches} from "@/store/matches/matches.types";
 import {MatchProps, TeamCellProps} from "@/types/types";
 import {TimeoutId} from "@reduxjs/toolkit/src/query/core/buildMiddleware/types";
 import Link from "next/link";
+import {matchesAPI} from "@/api/api";
+import {dateFormatter} from "@/utils/dateFormatter";
 
-const Results: NextPage = () => {
-    const matches = useSelector(selectMatches);
+type Props = {
+    matches: IMatch[]
+}
+
+const Results: NextPage<Props> = ({matches}) => {
+    matches = matches.filter(match => match.status === 'ended');
+    const dates = matches
+        .map((match) => new Date(Date.parse(match.date)))
+        .filter((value, index, array) => array.indexOf(value) === index);
+
+    const resultsSublists = dates.map((date) => {
+        return <ResultsSublist
+            key={date.getTime()}
+            matches={matches
+                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date.toDateString())}
+        />
+    });
+
+    console.log(dates);
+
+    if (!matches || matches.length === 0) {
+        return <div></div>
+    }
 
     return (
         <>
@@ -27,10 +48,7 @@ const Results: NextPage = () => {
             <main className={styles.main}>
                 <div className={styles.container}>
                     <div className={styles.page_headline}>Results</div>
-                    <ResultsSublist matches={matches}/>
-                    <ResultsSublist matches={matches}/>
-                    <ResultsSublist matches={matches}/>
-                    <ResultsSublist matches={matches}/>
+                    {resultsSublists}
                 </div>
             </main>
         </>
@@ -38,12 +56,16 @@ const Results: NextPage = () => {
 }
 
 const ResultsSublist: NextPage<IMatches> = ({matches}) => {
+    const date = dateFormatter.results(new Date(Date.parse(matches[0].date)));
+
+    const resultsCells = matches.map((match) => {
+        return <ResultCell key={match.id} match={match}/>
+    })
+
     return (
         <div className={styles.results_sublist}>
-            <div className={styles.headline}>Results for January 27th 2023</div>
-            <ResultCell match={matches[1]}/>
-            <ResultCell match={matches[1]}/>
-            <ResultCell match={matches[1]}/>
+            <div className={styles.headline}>{`Results for ${date}`}</div>
+            {resultsCells}
         </div>
     )
 }
@@ -64,7 +86,7 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
         clearTimeout(timer);
         timer = setTimeout(() => {
             setIsHover(false)
-        }, 500)
+        }, 450)
     }
 
     const mapsScore = score.maps.map((mapInfo) => {
@@ -159,3 +181,11 @@ const TeamCell: NextPage<TeamCellProps> = ({teamType, isWon, teamInfo}) => {
 }
 
 export default Results;
+
+export async function getStaticProps() {
+    const matches = await matchesAPI.getMatches();
+
+    return {
+        props: {matches}
+    }
+}

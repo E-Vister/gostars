@@ -9,9 +9,10 @@ import {clsx} from "clsx";
 type MapPickProps = {
     map?: IMap;
     teams?: ITeams;
+    id: number;
 }
 
-const MapCard: NextPage<MapPickProps> = ({map, teams}) => {
+const MapCard: NextPage<MapPickProps> = ({map, teams, id}) => {
     const mapImageSrc: string = map ? `/static/4x5/maps/de_${map.name.toLowerCase()}.png` : '/static/4x5/maps/map_placeholder.png';
     const mapPickTeam: string = map?.pickedBy !== 'decider' && map && teams ? teams[map.pickedBy].logo : '/placeholder.svg';
     let totalSidesScore: Array<number> = [];
@@ -59,7 +60,7 @@ const MapCard: NextPage<MapPickProps> = ({map, teams}) => {
                 </div>
             </div>
             <div className={styles.map_info}>
-                <div className={styles.map_name}>{map?.name || `TBA`}</div>
+                <div className={styles.map_name}>{`${map?.name || `TBA`} - Map ${id}`}</div>
                 <div className={styles.map_score_info}>
                     <Team team={teams?.team1}/>
                     <div className={styles.map_scores}>
@@ -68,10 +69,10 @@ const MapCard: NextPage<MapPickProps> = ({map, teams}) => {
                         </div>
                         <div className={styles.sides_score}>
                             <span>(</span>
-                            {map ? totalSidesScore[0] > 15
+                            {map ? totalSidesScore[0] === 15
                                 ? halfScores[0] : halfScores[1] : '-'}
                             <span>, </span>
-                            {map ? totalSidesScore[0] <= 15
+                            {map ? totalSidesScore[0] < 15
                                 ? halfScores[0] : halfScores[1] : '-'}
                             <span>)</span>
                         </div>

@@ -6,6 +6,7 @@ import React from "react";
 import {NextPage} from "next";
 import {IMatch} from "@/store/matches/matches.types";
 import Countdown from "@/components/countdown";
+import {dateFormatter} from "@/utils/dateFormatter";
 
 type Props = {
     match: IMatch,
@@ -14,7 +15,7 @@ type Props = {
 const ScoreBox: NextPage<Props> = ({match}) => {
     const parsedDate = new Date(Date.parse(match.date));
     const time = parsedDate.toTimeString().slice(0, 5);
-    const date = dateFormatter(parsedDate);
+    const date = dateFormatter.scoreBox(parsedDate);
 
     const [hydrated, setHydrated] = React.useState(false);
     React.useEffect(() => {
@@ -48,6 +49,11 @@ const ScoreBox: NextPage<Props> = ({match}) => {
                     />
                     <Spacer height={'4px'}/>
                     <div className={styles.team_name}>{match.team1.name}</div>
+                    <Spacer height={'2px'}/>
+                    <div className={`${styles.win_indicator} ${clsx({
+                        [styles.lost]: match.score.main.team1 < match.score.main.team2,
+                        [styles.won]: match.score.main.team1 > match.score.main.team2
+                    })}`}/>
                 </div>
             </div>
             <div className={`${styles.match_info} ${clsx({
@@ -88,22 +94,15 @@ const ScoreBox: NextPage<Props> = ({match}) => {
                     />
                     <Spacer height={'4px'}/>
                     <div className={styles.team_name}>{match.team2.name}</div>
+                    <Spacer height={'2px'}/>
+                    <div className={`${styles.win_indicator} ${clsx({
+                        [styles.lost]: match.score.main.team2 < match.score.main.team1,
+                        [styles.won]: match.score.main.team2 > match.score.main.team1
+                    })}`}/>
                 </div>
             </div>
         </div>
     )
-}
-
-const dateFormatter = (date: Date) => {
-    const day = date.getDate();
-    const month = date.toLocaleString('default', {month: 'long'});
-    const year = date.getFullYear();
-    const dayEnd = (day.toString().slice(-1) === '1')
-        ? `${day}st` : day.toString().slice(-1) === '2'
-            ? `${day}nd` : day.toString().slice(-1) === '3'
-                ? `${day}rd` : `${day}th`;
-
-    return `${dayEnd} ${month} ${year}`;
 }
 
 export default ScoreBox;

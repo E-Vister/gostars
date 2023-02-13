@@ -4,15 +4,33 @@ import styles from "@/styles/Matches.module.scss";
 import React from "react";
 import Image from "next/image";
 import {NextPage} from "next";
-import {selectMatches} from "@/store/matches/matchesSlice";
-import {IMatches} from "@/store/matches/matches.types";
-import {useSelector} from "react-redux";
+import {IMatch, IMatches} from "@/store/matches/matches.types";
 import {MatchProps, TeamCellProps} from "@/types/types";
 import Link from "next/link";
+import {matchesAPI} from "@/api/api";
+import {dateFormatter} from "@/utils/dateFormatter";
 
+type Props = {
+    matches: IMatch[]
+}
 
-const Matches: NextPage = () => {
-    const matches = useSelector(selectMatches);
+const Matches: NextPage<Props> = ({matches}) => {
+    matches = matches.filter(match => match.status === 'upcoming');
+    const dates = matches
+        .map((match) => new Date(Date.parse(match.date)))
+        .filter((value, index, array) => array.indexOf(value) === index);
+
+    const matchesSublists = dates.map((date) => {
+        return <MatchesSublist
+            key={date.getTime()}
+            matches={matches
+                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date.toDateString())}
+        />
+    });
+
+    if(!matches || matches.length === 0) {
+        return <div></div>
+    }
 
     return (
         <>
@@ -26,10 +44,7 @@ const Matches: NextPage = () => {
             <main className={styles.main}>
                 <div className={styles.container}>
                     <div className={styles.page_headline}>Matches</div>
-                    <MatchesSublist matches={matches}/>
-                    <MatchesSublist matches={matches}/>
-                    <MatchesSublist matches={matches}/>
-                    <MatchesSublist matches={matches}/>
+                    {matchesSublists}
                 </div>
             </main>
         </>
@@ -37,12 +52,16 @@ const Matches: NextPage = () => {
 }
 
 const MatchesSublist = ({matches}: IMatches) => {
+    const date = dateFormatter.matches(new Date(Date.parse(matches[0].date)));
+
+    const matchesCells = matches.map((match) => {
+        return <MatchCell key={match.id} match={match}/>
+    })
+
     return (
         <div className={styles.matches_sublist}>
-            <div className={styles.headline}>Tuesday - 2023-01-31</div>
-            <MatchCell match={matches[0]}/>
-            <MatchCell match={matches[0]}/>
-            <MatchCell match={matches[0]}/>
+            <div className={styles.headline}>{date}</div>
+            {matchesCells}
         </div>
     )
 }
@@ -109,3 +128,11 @@ const TeamCell: NextPage<TeamCellProps> = ({teamType, teamInfo}) => {
 }
 
 export default Matches;
+
+export async function getStaticProps() {
+    const matches = await matchesAPI.getMatches();
+
+    return {
+        props: {matches}
+    }
+}
