@@ -3,15 +3,15 @@ import Header from "@/components/header";
 import React from "react";
 
 const Document = () => {
-    return (
-        <Html lang="en">
-            <Head/>
-            <body>
-            <Main/>
-            <NextScript/>
-            </body>
-        </Html>
-    )
+  return (
+    <Html lang="en">
+      <Head />
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  )
 }
 
 export default Document;

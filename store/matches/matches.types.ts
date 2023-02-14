@@ -13,6 +13,7 @@ export interface ITeamScore {
 export interface IScore {
     main: IMainScore;
     maps: IMap[];
+    firstPick?: 'team1' | 'team2';
 }
 
 export interface IMainScore {
@@ -25,7 +26,7 @@ export interface IMap {
     team2: ITeamScore;
     name: 'Vertigo' | 'Overpass' | 'Nuke' | 'Mirage' | 'Ancient' | 'Inferno' | 'Anubis';
     pickedBy: 'team1' | 'team2' | 'decider';
-    won: 'team1' | 'team2' | 'draw';
+    number: number;
 }
 
 interface IMatchEvent {

@@ -20,17 +20,17 @@ const Results: NextPage<Props> = ({matches}) => {
     matches = matches.filter(match => match.status === 'ended');
     const dates = matches
         .map((match) => new Date(Date.parse(match.date)))
+        .sort((a,b) => +b - +a)
+        .map((date) => date.toDateString())
         .filter((value, index, array) => array.indexOf(value) === index);
 
-    const resultsSublists = dates.map((date) => {
+    const resultsSublists = dates.map((date, index) => {
         return <ResultsSublist
-            key={date.getTime()}
+            key={`${date}-${index}`}
             matches={matches
-                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date.toDateString())}
+                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date)}
         />
     });
-
-    console.log(dates);
 
     if (!matches || matches.length === 0) {
         return <div></div>

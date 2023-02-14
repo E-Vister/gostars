@@ -43,10 +43,19 @@ const Match: NextPage<Props> = ({match}) => {
                         <div className={styles.picks}>
                             {(match && match.status === 'ended')
                                 ? match.meta === 'bo1'
-                                    ? <Bo1Pattern team1={match.team1} team2={match.team2} picks={match.picks}/>
+                                    ? <Bo1Pattern team1={match.team1}
+                                                  team2={match.team2}
+                                                  picks={match.picks}
+                                                  firstPick={match.score.firstPick}/>
                                     : match.meta === 'bo3'
-                                        ? <Bo3Pattern team1={match.team1} team2={match.team2} picks={match.picks}/>
-                                        : <Bo5Pattern team1={match.team1} team2={match.team2} picks={match.picks}/>
+                                        ? <Bo3Pattern team1={match.team1}
+                                                      team2={match.team2}
+                                                      picks={match.picks}
+                                                      firstPick={match.score.firstPick}/>
+                                        : <Bo5Pattern team1={match.team1}
+                                                      team2={match.team2}
+                                                      picks={match.picks}
+                                                      firstPick={match.score.firstPick}/>
                                 : <UpcomingPattern/>}
                         </div>
 

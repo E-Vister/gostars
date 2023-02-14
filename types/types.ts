@@ -23,6 +23,7 @@ export type BestOfXPageProps = {
     team1: ITeam
     team2: ITeam
     picks: string[]
+    firstPick?: 'team1' | 'team2'
 }
 
 export type ITeams = {

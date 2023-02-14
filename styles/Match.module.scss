@@ -186,6 +186,10 @@
       }
 
       .event_name {
+        padding: 0 35px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 14px;
         max-width: 100%;
         color: rgb(9, 74, 103);
@@ -408,7 +412,7 @@
       border-radius: 16px;
       box-shadow: 0 5px 15px 1px rgba(34, 60, 80, 0.3);
 
-      width: 430px;
+      max-width: 430px;
 
       margin: 5px 0 15px 15px;
 
@@ -660,7 +664,7 @@
 
       .heading {
         font-size: 35px !important;
-        padding: 0 22px;
+        padding: 0 15px;
       }
 
       .date {
@@ -670,7 +674,7 @@
 
       .event_name {
         font-size: 11px !important;
-        padding: 0 22px;
+        padding: 0 15px !important;
       }
 
       .countdown {

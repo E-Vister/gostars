@@ -18,13 +18,16 @@ const Matches: NextPage<Props> = ({matches}) => {
     matches = matches.filter(match => match.status === 'upcoming');
     const dates = matches
         .map((match) => new Date(Date.parse(match.date)))
+        .sort((a,b) => +b - +a)
+        .map((date) => date.toDateString())
         .filter((value, index, array) => array.indexOf(value) === index);
 
-    const matchesSublists = dates.map((date) => {
+
+    const matchesSublists = dates.map((date, index) => {
         return <MatchesSublist
-            key={date.getTime()}
+            key={`${date}-${index}`}
             matches={matches
-                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date.toDateString())}
+                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date)}
         />
     });
 
