@@ -4,6 +4,7 @@ import styles from "@/styles/Match.module.scss";
 import {clsx} from "clsx";
 import Image from "next/image";
 import React from "react";
+import {useIntl} from "react-intl";
 
 const PickCard: NextPage<PickCardProps> = (
     {
@@ -14,13 +15,17 @@ const PickCard: NextPage<PickCardProps> = (
         decider,
         upcoming,
     }) => {
+    const intl = useIntl();
 
     return (
         <div className={styles.pick_card}>
             <div className={`${styles.pick_status} ${clsx({
                 [styles.banned]: banned,
             })}`}>
-                {banned ? `BAN` : decider ? `DECIDER` : upcoming ? `MAP` : `PICK`}
+                {banned
+                    ? intl.formatMessage({id: 'ban_caps'}) : decider
+                        ? intl.formatMessage({id: 'decider_caps'}) : upcoming
+                            ? intl.formatMessage({id: 'map_caps'}) : intl.formatMessage({id: 'pick_caps'})}
             </div>
             <div className={`${styles.map_name} ${clsx({
                 [styles.banned]: banned,

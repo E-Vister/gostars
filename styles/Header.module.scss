@@ -50,6 +50,34 @@
     }
   }
 
+  select {
+    max-width: 100px;
+    height: 36px;
+
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(68, 129, 182, 0.4);
+    color: rgba(68, 129, 182, 0.8);
+    padding: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: color 0.3s ease, background-color 0.3s ease, border-bottom-color 0.3s ease;
+    outline: none;
+
+    ::-ms-expand {
+      display: none;
+    }
+
+    :hover {
+      color: black;
+      background-color: rgba(68, 129, 182, 0.8);
+    }
+  }
+
   .button {
     display: inline-block;
     position: relative;

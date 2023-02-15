@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Header from "@/components/header";
 import styles from "@/styles/Matches.module.scss";
 import React from "react";
 import Image from "next/image";
@@ -9,15 +8,21 @@ import {MatchProps, TeamCellProps} from "@/types/types";
 import Link from "next/link";
 import {matchesAPI} from "@/api/api";
 import {dateFormatter} from "@/utils/dateFormatter";
+import {useIntl} from "react-intl";
+import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
+import {selectLocale} from "@/store/app/appSlice"
 
 type Props = {
     matches: IMatch[]
 }
 
 const Matches: NextPage<Props> = ({matches}) => {
+    const intl = useIntl()
+
     const dates = matches
         .map((match) => new Date(Date.parse(match.date)))
-        .sort((a,b) => +a - +b)
+        .sort((a, b) => +a - +b)
         .map((date) => date.toDateString())
         .filter((value, index, array) => array.indexOf(value) === index);
 
@@ -30,22 +35,21 @@ const Matches: NextPage<Props> = ({matches}) => {
         />
     });
 
-    if(!matches || matches.length === 0) {
+    if (!matches || matches.length === 0) {
         return <div></div>
     }
 
     return (
         <>
             <Head>
-                <title>Matches | GoStars</title>
+                <title>{`${intl.formatMessage({id: 'matches_title'})} GoStars`}</title>
                 <meta name="description" content="Matches page of the gostars"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <Header/>
             <main className={styles.main}>
                 <div className={styles.container}>
-                    <div className={styles.page_headline}>Matches</div>
+                    <div className={styles.page_headline}>{intl.formatMessage({id: 'matches_header'})}</div>
                     {matchesSublists}
                 </div>
             </main>
@@ -54,7 +58,8 @@ const Matches: NextPage<Props> = ({matches}) => {
 }
 
 const MatchesSublist = ({matches}: IMatches) => {
-    const date = dateFormatter.matches(new Date(Date.parse(matches[0].date)));
+    const currentLocale = useSelector(selectLocale);
+    const date = dateFormatter.matches(new Date(Date.parse(matches[0].date)), currentLocale);
 
     const matchesCells = matches.map((match) => {
         return <MatchCell key={match.id} match={match}/>
@@ -62,7 +67,9 @@ const MatchesSublist = ({matches}: IMatches) => {
 
     return (
         <div className={styles.matches_sublist}>
-            <div className={styles.headline}>{date}</div>
+            <div className={styles.headline}>
+                {date}
+            </div>
             {matchesCells}
         </div>
     )

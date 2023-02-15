@@ -5,6 +5,9 @@ import {NextPage} from "next";
 import {ITeams} from "@/types/types";
 import {IMap, ITeam} from "@/store/matches/matches.types";
 import {clsx} from "clsx";
+import {useIntl} from "react-intl";
+import {useSelector} from "react-redux";
+import {selectLocale} from "@/store/app/appSlice";
 
 type MapPickProps = {
     map?: IMap;
@@ -13,6 +16,8 @@ type MapPickProps = {
 }
 
 const MapCard: NextPage<MapPickProps> = ({map, teams, id}) => {
+    const intl = useIntl();
+    const currentLocale = useSelector(selectLocale);
     const mapImageSrc: string = map ? `/static/4x5/maps/de_${map.name.toLowerCase()}.png` : '/static/4x5/maps/map_placeholder.png';
     const mapPickTeam: string = map?.pickedBy !== 'decider' && map && teams ? teams[map.pickedBy].logo : '/placeholder.svg';
     let totalSidesScore: Array<number> = [];
@@ -47,11 +52,13 @@ const MapCard: NextPage<MapPickProps> = ({map, teams, id}) => {
                 <div className={`${styles.picked_by} ${clsx({
                     [styles.decider]: map?.pickedBy === 'decider'
                 })}`}>
-                    <div className={`${styles.wrapper} ${clsx({
+                    <div className={`${styles.map_wrapper} ${clsx({
                         [styles.upcoming]: !map,
                     })}`}>
                         <span className={styles.map_pick_span}>
-                            {map && map.pickedBy !== 'decider' ? `picked by ` : 'decider'}
+                            {map && map.pickedBy !== 'decider'
+                                ? intl.formatMessage({id: 'picked_by'})
+                                : intl.formatMessage({id: 'decider'})}
                         </span>
                         {map && map.pickedBy !== 'decider'
                             ? <Image src={mapPickTeam} alt={`Picked by`} width={25} height={25}/>
@@ -60,7 +67,12 @@ const MapCard: NextPage<MapPickProps> = ({map, teams, id}) => {
                 </div>
             </div>
             <div className={styles.map_info}>
-                <div className={styles.map_name}>{`${map?.name || `TBA`} - Map ${id}`}</div>
+                <div className={styles.map_name}>
+                    {currentLocale === 'en-US'
+                        ? `${map?.name || `TBA`} - ${intl.formatMessage({id: 'map_number'})} ${id}`
+                        :`${intl.formatMessage({id: 'map_number'})} #${id} - ${map?.name || `TBA`}`
+                    }
+                </div>
                 <div className={styles.map_score_info}>
                     <Team team={teams?.team1}/>
                     <div className={styles.map_scores}>

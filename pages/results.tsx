@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Header from "@/components/header";
 import React, {useState} from "react";
 import styles from '@/styles/Results.module.scss';
 import Image from "next/image";
@@ -11,12 +10,17 @@ import {TimeoutId} from "@reduxjs/toolkit/src/query/core/buildMiddleware/types";
 import Link from "next/link";
 import {matchesAPI} from "@/api/api";
 import {dateFormatter} from "@/utils/dateFormatter";
+import {useIntl} from "react-intl";
+import {useSelector} from "react-redux";
+import {selectLocale} from "@/store/app/appSlice";
 
 type Props = {
     matches: IMatch[]
 }
 
 const Results: NextPage<Props> = ({matches}) => {
+    const intl = useIntl()
+
     const dates = matches
         .map((match) => new Date(Date.parse(match.date)))
         .sort((a, b) => +b - +a)
@@ -38,12 +42,11 @@ const Results: NextPage<Props> = ({matches}) => {
     return (
         <>
             <Head>
-                <title>Results | GoStars</title>
+                <title>{`${intl.formatMessage({id: 'results_title'})} GoStars`}</title>
                 <meta name="description" content="Results page of the gostars"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <Header/>
             <main className={styles.main}>
                 <div className={styles.container}>
                     {resultsSublists}
@@ -54,7 +57,9 @@ const Results: NextPage<Props> = ({matches}) => {
 }
 
 const ResultsSublist: NextPage<IMatches> = ({matches}) => {
-    const date = dateFormatter.results(new Date(Date.parse(matches[0].date)));
+    const intl = useIntl()
+    const currentLocale = useSelector(selectLocale);
+    const date = dateFormatter.results(new Date(Date.parse(matches[0].date)), currentLocale);
 
     const resultsCells = matches.map((match) => {
         return <ResultCell key={match.id} match={match}/>
@@ -62,7 +67,9 @@ const ResultsSublist: NextPage<IMatches> = ({matches}) => {
 
     return (
         <div className={styles.results_sublist}>
-            <div className={styles.headline}>{`Results for ${date}`}</div>
+            <div className={styles.headline}>
+                {`${intl.formatMessage({id: 'results_sublist'})} ${date}`}
+            </div>
             {resultsCells}
         </div>
     )
@@ -71,6 +78,7 @@ const ResultsSublist: NextPage<IMatches> = ({matches}) => {
 const ResultCell: NextPage<MatchProps> = ({match}) => {
     const [isHover, setIsHover] = useState(false);
     const {score, team1, team2, matchEvent, matchType} = match;
+    const teamWon = (score.main.team1 > score.main.team2) ? 'team1' : 'team2';
     let timer: TimeoutId;
 
     const onMouseEnter = () => {
@@ -129,7 +137,7 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
                 <table>
                     <tbody>
                     <tr>
-                        <TeamCell teamType={'team1'} isWon={true} teamInfo={team1}/>
+                        <TeamCell teamType={'team1'} isWon={teamWon === "team1"} teamInfo={team1}/>
                         <td className={styles.score}>
                             <div className={styles.score_wrapper}>
                                 {isHover
@@ -153,7 +161,7 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
                                     </div>}
                             </div>
                         </td>
-                        <TeamCell teamType={'team2'} teamInfo={team2}/>
+                        <TeamCell teamType={'team2'} isWon={teamWon === "team2"} teamInfo={team2}/>
                         <td className={styles.event}>
                             <Image
                                 src={matchEvent.logo}

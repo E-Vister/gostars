@@ -12,12 +12,18 @@ import YoutubeEmbed from "@/components/youtube-embed";
 import Maps from "@/components/match/maps/maps";
 import {matchesAPI} from "@/api/api";
 import {IMatch} from "@/store/matches/matches.types";
+import {FormattedMessage, useIntl} from "react-intl";
+import {useSelector} from "react-redux";
+import {selectLocale} from "@/store/app/appSlice";
 
 type Props = {
     match: IMatch,
 }
 
 const Match: NextPage<Props> = ({match}) => {
+    const intl = useIntl();
+    const currentLocale = useSelector(selectLocale);
+
     if (!match) {
         return <div></div>
     }
@@ -30,15 +36,16 @@ const Match: NextPage<Props> = ({match}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <Header/>
             <main className={styles.main}>
                 <div className={styles.container}>
                     <div className={styles.wrapper}>
                         <ScoreBox match={match}/>
 
                         <span className={styles.paragraph_heading}>{match.status === 'ended'
-                            ? `Picks`
-                            : `Best of ${match.meta.slice(-1)} (${match.matchType})`}
+                            ? intl.formatMessage({id: 'picks'})
+                            : currentLocale === 'en-US'
+                                ? `Best of ${match.meta.slice(-1)} (${match.matchType})`
+                                : `BO${match.meta.slice(-1)} (${match.matchType})`}
                         </span>
                         <div className={styles.picks}>
                             {(match && match.status === 'ended')
@@ -60,7 +67,7 @@ const Match: NextPage<Props> = ({match}) => {
                         </div>
 
                         <span className={styles.paragraph_heading}>
-                            Maps
+                            {<FormattedMessage id={'maps_header'}/>}
                         </span>
                         <Maps maps={match.score.maps}
                               teams={{team1: match.team1, team2: match.team2}}
@@ -68,7 +75,7 @@ const Match: NextPage<Props> = ({match}) => {
 
                         <span style={{paddingBottom: `5px`, marginTop: '0px !important'}}
                               className={styles.paragraph_heading}>
-                            {`Watch ${match.team1.name} vs. ${match.team2.name}`}
+                            {`${intl.formatMessage({id: 'match_watch'})} ${match.team1.name} vs. ${match.team2.name}`}
                         </span>
                         <YoutubeEmbed embedId={`6ASq2clrbs8?start=33200`}/>
                     </div>

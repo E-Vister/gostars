@@ -453,7 +453,14 @@
           width: 100%;
           height: 100%;
 
-          .wrapper {
+          &.decider {
+            .map_pick_span {
+              margin-left: 3px !important;
+              margin-right: 3px !important;
+            }
+          }
+
+          .map_wrapper {
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -462,7 +469,7 @@
             background: rgba(34, 60, 80, 0.7);
             border-radius: 16px;
 
-            width: 115px;
+            max-width: 115px;
             height: 28px;
 
             position: absolute;
@@ -477,8 +484,15 @@
             }
 
             .map_pick_span {
-              width: 66px;
-              margin-right: 2px;
+              max-height: 17px;
+              white-space: nowrap;
+              margin-left: 5px;
+              max-width: 90px;
+              margin-right: 4px;
+            }
+
+            img {
+              margin-right: 5px;
             }
           }
 

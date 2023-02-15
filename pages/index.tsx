@@ -1,29 +1,47 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.scss'
-import Header from '@/components/header'
 import HomePageSquares from "@/components/home-page-squares";
+import {useIntl} from "react-intl";
+import {NextPage} from "next";
+import {wrapper} from "@/store/store";
+
+interface IEventItem {
+    status: string
+    statusForStyle: string
+    logo: string
+    name: string
+    duration: string
+}
 
 const Home = () => {
+    const intl = useIntl()
+
     return (
         <>
             <Head>
-                <title>Home | GoStars</title>
+                <title>
+                    {intl.formatMessage({id: 'event_previous'}) === "Previous"
+                        ? `${intl.formatMessage({id: 'home_title'})} GoStars`
+                        : `GoStars`}
+                </title>
                 <meta name="description" content="Home page of the gostars"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <Header isHomePage={true}/>
             <main className={styles.main}>
-                <EventItem status={'Previous'}
+                <EventItem status={intl.formatMessage({id: 'event_previous'})}
+                           statusForStyle={'previous'}
                            logo={'https://i.imgur.com/A99O1Tu.png'}
                            name={'BLAST Premier Spring Groups 2023'}
                            duration={'Jan 15th - Jan 23th'}/>
-                <EventItem status={'Ongoing'}
+                <EventItem status={intl.formatMessage({id: 'event_ongoing'})}
+                           statusForStyle={'ongoing'}
                            logo={'https://i.imgur.com/9pq9MA4.png'}
                            name={'IEM Katowice 2023'}
                            duration={'Jan 19th - Jan 29th'}/>
-                <EventItem status={'Upcoming'}
+                <EventItem status={intl.formatMessage({id: 'event_upcoming'})}
+                           statusForStyle={'upcoming'}
                            logo={'https://i.imgur.com/uusl30s.png'}
                            name={'ESL Pro League Season 17'}
                            duration={'Feb 4th - Feb 12th'}/>
@@ -32,9 +50,8 @@ const Home = () => {
     )
 }
 
-const EventItem = ({status, logo, name, duration}: any) => {
+const EventItem: NextPage<IEventItem> = ({status, logo, name, duration, statusForStyle}) => {
     const logoSrc = logo;
-    const statusForStyle = status.toLowerCase();
 
     return (
         <div className={`${styles.area} ${styles[statusForStyle]}`}>

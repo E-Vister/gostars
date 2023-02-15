@@ -7,15 +7,20 @@ import {NextPage} from "next";
 import {IMatch} from "@/store/matches/matches.types";
 import Countdown from "@/components/countdown";
 import {dateFormatter} from "@/utils/dateFormatter";
+import {useIntl} from "react-intl";
+import {useSelector} from "react-redux";
+import {selectLocale} from "@/store/app/appSlice";
 
 type Props = {
     match: IMatch,
 }
 
 const ScoreBox: NextPage<Props> = ({match}) => {
+    const intl = useIntl();
+    const currentLocale = useSelector(selectLocale);
     const parsedDate = new Date(Date.parse(match.date));
     const time = parsedDate.toTimeString().slice(0, 5);
-    const date = dateFormatter.scoreBox(parsedDate);
+    const date = dateFormatter.scoreBox(parsedDate, currentLocale);
     const team1Country = match.team1.country.includes('placeholder')
         ? `/static/flags/WORLD.png`
         : `/static/flags/${match.team1.country}.png`;
@@ -77,7 +82,7 @@ const ScoreBox: NextPage<Props> = ({match}) => {
                 <div className={styles.countdown}>
                     {match.status === 'upcoming'
                         ? <Countdown targetDate={parsedDate.getTime()}/>
-                        : `Match over`}
+                        : intl.formatMessage({id: 'match_over'})}
                 </div>
             </div>
             <div className={styles.team}>

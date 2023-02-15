@@ -155,9 +155,10 @@
   .results_sublist {
     .result {
       .score {
-        width: 90px !important;
-        padding-left: 2px;
-        padding-right: 2px;
+        width: 80px !important;
+        white-space: nowrap;
+        padding-left: 4px;
+        padding-right: 4px;
       }
 
       .event {
