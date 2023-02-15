@@ -17,10 +17,9 @@ type Props = {
 }
 
 const Results: NextPage<Props> = ({matches}) => {
-    matches = matches.filter(match => match.status === 'ended');
     const dates = matches
         .map((match) => new Date(Date.parse(match.date)))
-        .sort((a,b) => +b - +a)
+        .sort((a, b) => +b - +a)
         .map((date) => date.toDateString())
         .filter((value, index, array) => array.indexOf(value) === index);
 
@@ -47,7 +46,6 @@ const Results: NextPage<Props> = ({matches}) => {
             <Header/>
             <main className={styles.main}>
                 <div className={styles.container}>
-                    <div className={styles.page_headline}>Results</div>
                     {resultsSublists}
                 </div>
             </main>
@@ -107,6 +105,22 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
         )
     })
 
+    if (mapsScore.length === 0) mapsScore.push(((
+        <div className={styles.map_score} key={`$Score-${match.id}`}>
+                <span className={`${clsx({
+                    [styles.score_won]: score.main.team1 > score.main.team2,
+                    [styles.score_lost]: score.main.team1 < score.main.team2,
+                    [styles.score_draw]: score.main.team1 === score.main.team2,
+                })}`}>{score.main.team1}</span>
+            <span className={styles.dash}>-</span>
+            <span className={`${clsx({
+                [styles.score_won]: score.main.team2 > score.main.team1,
+                [styles.score_lost]: score.main.team2 < score.main.team1,
+                [styles.score_draw]: score.main.team2 === score.main.team1,
+            })}`}>{score.main.team2}</span>
+        </div>
+    )))
+
     return (
         <div className={styles.result}
              onMouseEnter={onMouseEnter}
@@ -129,13 +143,13 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
                                         [styles.score_won]: score.main.team1 > score.main.team2,
                                         [styles.score_lost]: score.main.team1 < score.main.team2,
                                         [styles.score_draw]: score.main.team1 === score.main.team2,
-                                    })}`}>{match.score.main.team1}</span>
+                                    })}`}>{score.main.team1}</span>
                                         <span className={styles.dash}>-</span>
                                         <span className={`${clsx({
                                             [styles.score_won]: score.main.team2 > score.main.team1,
                                             [styles.score_lost]: score.main.team2 < score.main.team1,
                                             [styles.score_draw]: score.main.team2 === score.main.team1,
-                                        })}`}>{match.score.main.team2}</span>
+                                        })}`}>{score.main.team2}</span>
                                     </div>}
                             </div>
                         </td>
@@ -183,7 +197,7 @@ const TeamCell: NextPage<TeamCellProps> = ({teamType, isWon, teamInfo}) => {
 export default Results;
 
 export async function getStaticProps() {
-    const matches = await matchesAPI.getMatches();
+    const matches = await matchesAPI.getResults();
 
     return {
         props: {matches}

@@ -15,10 +15,9 @@ type Props = {
 }
 
 const Matches: NextPage<Props> = ({matches}) => {
-    matches = matches.filter(match => match.status === 'upcoming');
     const dates = matches
         .map((match) => new Date(Date.parse(match.date)))
-        .sort((a,b) => +b - +a)
+        .sort((a,b) => +a - +b)
         .map((date) => date.toDateString())
         .filter((value, index, array) => array.indexOf(value) === index);
 
@@ -113,6 +112,8 @@ const MatchCell: NextPage<MatchProps> = ({match}) => {
 }
 
 const TeamCell: NextPage<TeamCellProps> = ({teamType, teamInfo}) => {
+    const teamLogo = (teamInfo.logo && teamInfo.logo.includes('http')) ? teamInfo.logo : '/placeholder.svg';
+
     return (
         <td className={styles.team_cell}>
             <div className={`${styles.line_align} ${styles[teamType]}`}>
@@ -120,7 +121,7 @@ const TeamCell: NextPage<TeamCellProps> = ({teamType, teamInfo}) => {
                     {teamInfo.name}
                 </div>
                 <Image
-                    src={teamInfo.logo}
+                    src={teamLogo}
                     alt={teamInfo.name}
                     className={styles.team_logo}
                     width={30}
@@ -133,7 +134,7 @@ const TeamCell: NextPage<TeamCellProps> = ({teamType, teamInfo}) => {
 export default Matches;
 
 export async function getStaticProps() {
-    const matches = await matchesAPI.getMatches();
+    const matches = await matchesAPI.getUpcoming();
 
     return {
         props: {matches}

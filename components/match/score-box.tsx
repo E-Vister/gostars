@@ -16,6 +16,12 @@ const ScoreBox: NextPage<Props> = ({match}) => {
     const parsedDate = new Date(Date.parse(match.date));
     const time = parsedDate.toTimeString().slice(0, 5);
     const date = dateFormatter.scoreBox(parsedDate);
+    const team1Country = match.team1.country.includes('placeholder')
+        ? `/static/flags/WORLD.png`
+        : `/static/flags/${match.team1.country}.png`;
+    const team2Country = match.team2.country.includes('placeholder')
+        ? `/static/flags/WORLD.png`
+        : `/static/flags/${match.team2.country}.png`;
 
     const [hydrated, setHydrated] = React.useState(false);
     React.useEffect(() => {
@@ -30,7 +36,7 @@ const ScoreBox: NextPage<Props> = ({match}) => {
             [styles.upcoming]: match.status === 'upcoming',
         })}`}>
             <div className={styles.team}>
-                <Image src={`/static/flags/${match.team1.country}.png`}
+                <Image src={team1Country}
                        alt={match.team1.country}
                        className={`${styles.team_country} ${styles.team1}`}
                        width={300}
@@ -75,7 +81,7 @@ const ScoreBox: NextPage<Props> = ({match}) => {
                 </div>
             </div>
             <div className={styles.team}>
-                <Image src={`/static/flags/${match.team2.country}.png`}
+                <Image src={team2Country}
                        alt={match.team2.country}
                        className={`${styles.team_country} ${styles.team2}`}
                        width={300}
