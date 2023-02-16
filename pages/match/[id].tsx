@@ -8,7 +8,7 @@ import UpcomingPattern from "@/components/match/upcoming-pattern";
 import Bo5Pattern from "@/components/match/picks/bo5-pattern";
 import Bo1Pattern from "@/components/match/picks/bo1-pattern";
 import ScoreBox from "@/components/match/score-box";
-import YoutubeEmbed from "@/components/youtube-embed";
+import StreamEmbed from "@/components/stream-embed";
 import Maps from "@/components/match/maps/maps";
 import {matchesAPI} from "@/api/api";
 import {IMatch} from "@/store/matches/matches.types";
@@ -77,7 +77,7 @@ const Match: NextPage<Props> = ({match}) => {
                               className={styles.paragraph_heading}>
                             {`${intl.formatMessage({id: 'match_watch'})} ${match.team1.name} vs. ${match.team2.name}`}
                         </span>
-                        <YoutubeEmbed embedId={`6ASq2clrbs8?start=33200`}/>
+                        <StreamEmbed embedLink={match.stream}/>
                     </div>
                 </div>
             </main>

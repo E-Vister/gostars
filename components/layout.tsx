@@ -19,6 +19,14 @@ const Layout = ({children}: DashboardLayoutProps) => {
         dispatch(setLocale(value));
     }
 
+    const [hydrated, setHydrated] = React.useState(false);
+    React.useEffect(() => {
+        setHydrated(true);
+    }, []);
+    if (!hydrated) {
+        return null;
+    }
+
 
     return (
         <>

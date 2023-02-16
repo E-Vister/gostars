@@ -29,14 +29,6 @@ const ScoreBox: NextPage<Props> = ({match}) => {
         ? `/static/flags/WORLD.png`
         : `/static/flags/${match.team2.country}.png`;
 
-    const [hydrated, setHydrated] = React.useState(false);
-    React.useEffect(() => {
-        setHydrated(true);
-    }, []);
-    if (!hydrated) {
-        return null;
-    }
-
     return (
         <div className={`${styles.scoreBox} ${clsx({
             [styles.upcoming]: match.status === 'upcoming',

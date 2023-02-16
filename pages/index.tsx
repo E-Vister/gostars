@@ -4,7 +4,8 @@ import styles from '@/styles/Home.module.scss'
 import HomePageSquares from "@/components/home-page-squares";
 import {useIntl} from "react-intl";
 import {NextPage} from "next";
-import {wrapper} from "@/store/store";
+import React from "react";
+import Link from "next/link";
 
 interface IEventItem {
     status: string
@@ -12,6 +13,7 @@ interface IEventItem {
     logo: string
     name: string
     duration: string
+    eventId: number
 }
 
 const Home = () => {
@@ -34,27 +36,38 @@ const Home = () => {
                            statusForStyle={'previous'}
                            logo={'https://i.imgur.com/A99O1Tu.png'}
                            name={'BLAST Premier Spring Groups 2023'}
+                           eventId={6970}
                            duration={'Jan 15th - Jan 23th'}/>
                 <EventItem status={intl.formatMessage({id: 'event_ongoing'})}
                            statusForStyle={'ongoing'}
                            logo={'https://i.imgur.com/9pq9MA4.png'}
                            name={'IEM Katowice 2023'}
+                           eventId={6809}
                            duration={'Jan 19th - Jan 29th'}/>
                 <EventItem status={intl.formatMessage({id: 'event_upcoming'})}
                            statusForStyle={'upcoming'}
                            logo={'https://i.imgur.com/uusl30s.png'}
                            name={'ESL Pro League Season 17'}
+                           eventId={6862}
                            duration={'Feb 4th - Feb 12th'}/>
             </main>
         </>
     )
 }
 
-const EventItem: NextPage<IEventItem> = ({status, logo, name, duration, statusForStyle}) => {
+const EventItem: NextPage<IEventItem> = (
+    {
+        status,
+        logo,
+        name,
+        duration,
+        statusForStyle,
+        eventId
+    }) => {
     const logoSrc = logo;
 
     return (
-        <div className={`${styles.area} ${styles[statusForStyle]}`}>
+        <Link href={`/event/${eventId}`} className={`${styles.area} ${styles[statusForStyle]}`}>
             <div className={styles.event}>
                 <span className={styles.status}>{status}</span>
                 <Image
@@ -69,7 +82,7 @@ const EventItem: NextPage<IEventItem> = ({status, logo, name, duration, statusFo
                 <span className={styles.duration}>{duration}</span>
             </div>
             <HomePageSquares/>
-        </div>
+        </Link>
     )
 }
 

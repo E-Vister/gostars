@@ -78,14 +78,6 @@ const MatchCell: NextPage<MatchProps> = ({match}) => {
     const {team1, team2, matchEvent, matchType} = match;
     const time = new Date(Date.parse(match.date)).toTimeString().slice(0, 5);
 
-    const [hydrated, setHydrated] = React.useState(false);
-    React.useEffect(() => {
-        setHydrated(true);
-    }, []);
-    if (!hydrated) {
-        return null;
-    }
-
     return (
         <div className={styles.match}>
             <Link style={{width: '100%'}} href={`match/${match.id}`}>

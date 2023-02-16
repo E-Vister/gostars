@@ -46,6 +46,7 @@ export interface IMatch {
     matchEvent: IMatchEvent;
     meta: 'bo1' | 'bo2' | 'bo3' | 'bo5';
     status: 'upcoming' | 'ended';
+    stream: string;
 }
 
 export interface IMatches {

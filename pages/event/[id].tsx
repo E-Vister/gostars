@@ -45,13 +45,6 @@ const Event: NextPage<Props> = ({event}) => {
 
 const EventHub: NextPage<Props> = ({event}) => {
     const intl = useIntl();
-    const [hydrated, setHydrated] = React.useState(false);
-    React.useEffect(() => {
-        setHydrated(true);
-    }, []);
-    if (!hydrated) {
-        return null;
-    }
 
     const {
         name,
