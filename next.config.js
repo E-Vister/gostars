@@ -2,12 +2,6 @@
 const nextConfig = {
     reactStrictMode: true,
 
-    i18n: {
-        locales: ['en-US', 'be', 'uk', 'ru-RU'],
-        localeDetection: true,
-        defaultLocale: 'en-US',
-    },
-
     images: {
         domains: [
             'svgur.com',
