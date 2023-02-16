@@ -48,7 +48,7 @@ const Match: NextPage<Props> = ({match}) => {
                                 : `BO${match.meta.slice(-1)} (${match.matchType})`}
                         </span>
                         <div className={styles.picks}>
-                            {(match && match.status === 'ended')
+                            {(match && match.status === 'ended' || match.picks.length > 0)
                                 ? match.meta === 'bo1'
                                     ? <Bo1Pattern team1={match.team1}
                                                   team2={match.team2}

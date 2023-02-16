@@ -32,7 +32,7 @@ export interface IMap {
 interface IMatchEvent {
     name: string;
     logo: string;
-    live: string;
+    id: number;
 }
 
 export interface IMatch {

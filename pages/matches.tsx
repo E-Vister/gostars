@@ -9,7 +9,6 @@ import Link from "next/link";
 import {matchesAPI} from "@/api/api";
 import {dateFormatter} from "@/utils/dateFormatter";
 import {useIntl} from "react-intl";
-import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import {selectLocale} from "@/store/app/appSlice"
 

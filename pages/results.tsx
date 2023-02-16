@@ -21,20 +21,6 @@ type Props = {
 const Results: NextPage<Props> = ({matches}) => {
     const intl = useIntl()
 
-    const dates = matches
-        .map((match) => new Date(Date.parse(match.date)))
-        .sort((a, b) => +b - +a)
-        .map((date) => date.toDateString())
-        .filter((value, index, array) => array.indexOf(value) === index);
-
-    const resultsSublists = dates.map((date, index) => {
-        return <ResultsSublist
-            key={`${date}-${index}`}
-            matches={matches
-                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date)}
-        />
-    });
-
     if (!matches || matches.length === 0) {
         return <div></div>
     }
@@ -49,11 +35,36 @@ const Results: NextPage<Props> = ({matches}) => {
             </Head>
             <main className={styles.main}>
                 <div className={styles.container}>
-                    {resultsSublists}
+                    <ResultsContainer matches={matches}/>
                 </div>
             </main>
         </>
     )
+}
+
+export const ResultsContainer: NextPage<Props> = ({matches}) => {
+    const intl = useIntl()
+
+    const dates = matches
+        .map((match) => new Date(Date.parse(match.date)))
+        .sort((a, b) => +b - +a)
+        .map((date) => date.toDateString())
+        .filter((value, index, array) => array.indexOf(value) === index);
+
+    const resultsSublists = dates.map((date, index) => {
+        return <ResultsSublist
+            key={`${date}-${index}`}
+            matches={matches
+                .filter((m, i) => new Date(Date.parse(m.date)).toDateString() === date)}
+        />
+    });
+
+
+    if (resultsSublists.length === 0) {
+        return <div className={styles.empty}>{intl.formatMessage({id: 'empty_matches_message'})}</div>
+    } else {
+        return <>{resultsSublists}</>
+    }
 }
 
 const ResultsSublist: NextPage<IMatches> = ({matches}) => {
@@ -133,7 +144,7 @@ const ResultCell: NextPage<MatchProps> = ({match}) => {
         <div className={styles.result}
              onMouseEnter={onMouseEnter}
              onMouseLeave={onMouseLeave}>
-            <Link style={{width: '100%'}} href={`match/${match.id}`}>
+            <Link style={{width: '100%'}} href={`../match/${match.id}`}>
                 <table>
                     <tbody>
                     <tr>

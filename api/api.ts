@@ -16,7 +16,7 @@ export const matchesAPI = {
     },
     async getMatchById(id: number) {
         const response = await instance.get(`/matches/${id}`);
-        return response.data as IMatch[];
+        return response.data as IMatch;
     },
     async getResults(offset?: number) {
         offset = offset || 0;
@@ -26,5 +26,9 @@ export const matchesAPI = {
     async getUpcoming() {
         const response = await instance.get(`/matches/upcoming`)
         return response.data as IMatch[];
+    },
+    async getEventById(id: number) {
+        const response = await instance.get(`/events/${id}`)
+        return response.data;
     }
 }

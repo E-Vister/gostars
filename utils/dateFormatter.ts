@@ -64,5 +64,21 @@ export const dateFormatter = {
         const day = date.toLocaleString('default', {day: "2-digit"});
 
         return `${weekDay} ${year}-${month}-${day}`;
+    },
+    event(date: Date, locale: string, type: 'from' | 'to') {
+        const day = date.getDate();
+        const year = date.getFullYear();
+        const month = this.months[locale as keyof typeof this.months][date.getMonth()].slice(0,3);
+
+        switch (locale) {
+            case 'en-US':
+                return type === 'from' ? `${month} ${day}` : `${month} ${day}, ${year}`;
+            case 'be':
+                return type === 'from' ? `${day} ${month}` : `${day} ${month}, ${year}`;
+            case 'uk':
+                return type === 'from' ? `${day} ${month}` : `${day} ${month}, ${year}`;
+            case 'ru-RU':
+                return type === 'from' ? `${day} ${month}` : `${day} ${month}, ${year}`;
+        }
     }
 }

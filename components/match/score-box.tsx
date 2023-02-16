@@ -10,6 +10,7 @@ import {dateFormatter} from "@/utils/dateFormatter";
 import {useIntl} from "react-intl";
 import {useSelector} from "react-redux";
 import {selectLocale} from "@/store/app/appSlice";
+import Link from "next/link";
 
 type Props = {
     match: IMatch,
@@ -77,7 +78,9 @@ const ScoreBox: NextPage<Props> = ({match}) => {
                         : `${match.score.main.team1} - ${match.score.main.team2}`}
                 </div>
                 <div className={styles.date}>{date}</div>
-                <div className={styles.event_name}>{match.matchEvent.name}</div>
+                <Link className={styles.event_name} href={`../event/${match.matchEvent.id}`}>
+                    {match.matchEvent.name}
+                </Link>
                 <Spacer height={'8px'}/>
                 <div className={styles.countdown}>
                     {match.status === 'upcoming'
