@@ -66,22 +66,22 @@ Pages
 -----------
 The application has several pages:
 
-- **Latest Match Results**
+- **Results**
 
   Displays the latest results of all the matches.
 
 
-- **Schedule of Upcoming Matches**
+- **Matches**
 
   Displays the schedule of upcoming matches.
 
 
-- **Detailed Information about a Match**
+- **Match**
 
   Displays detailed information about a particular match, including the teams, maps, and recording of the match.
 
 
-- **Event Page**
+- **Event**
 
   Displays brief information about the tournament and all the matches related to the event.
 
