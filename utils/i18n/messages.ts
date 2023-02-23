@@ -44,7 +44,7 @@ export const messages = {
         home_title: '',
         results_title: 'Вынікі |',
         matches_title: 'Матчы |',
-        matches_header: 'Маючыя адбыцца матчы',
+        matches_header: 'Наступныя матчы',
         results_sublist: 'Вынікі ад',
         maps_header: 'Мапы',
         match_watch: 'Глядзець',

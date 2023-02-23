@@ -30,3 +30,25 @@ export type ITeams = {
     team1: ITeam;
     team2: ITeam;
 }
+
+export type IEvent = {
+    name: string;
+    logo: string;
+    banner: string;
+    prizePool: string;
+    teamsNumber: string;
+    eventStatus: string;
+    location: ILocation;
+    date: IDate;
+    results?: IMatch[];
+}
+
+interface IDate {
+    from: Date;
+    to: Date;
+}
+
+interface ILocation {
+    flag: string;
+    place: string;
+}
