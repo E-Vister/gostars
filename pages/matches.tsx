@@ -11,6 +11,7 @@ import {dateFormatter} from "@/utils/dateFormatter";
 import {useIntl} from "react-intl";
 import {useSelector} from "react-redux";
 import {selectLocale} from "@/store/app/appSlice"
+import {clsx} from "clsx";
 
 type Props = {
     matches: IMatch[]
@@ -57,6 +58,7 @@ const Matches: NextPage<Props> = ({matches}) => {
 }
 
 const MatchesSublist = ({matches}: IMatches) => {
+    const intl = useIntl()
     const currentLocale = useSelector(selectLocale);
     const date = dateFormatter.matches(new Date(Date.parse(matches[0].date)), currentLocale);
 
@@ -67,7 +69,7 @@ const MatchesSublist = ({matches}: IMatches) => {
     return (
         <div className={styles.matches_sublist}>
             <div className={styles.headline}>
-                {date}
+                {matches[0].date ? date : intl.formatMessage({id: 'live_matches_title'})}
             </div>
             {matchesCells}
         </div>
@@ -75,7 +77,7 @@ const MatchesSublist = ({matches}: IMatches) => {
 }
 
 const MatchCell: NextPage<MatchProps> = ({match}) => {
-    const {team1, team2, matchEvent, matchType} = match;
+    const {team1, team2, matchEvent, matchType, title} = match;
     const time = new Date(Date.parse(match.date)).toTimeString().slice(0, 5);
 
     return (
@@ -84,23 +86,39 @@ const MatchCell: NextPage<MatchProps> = ({match}) => {
                 <table>
                     <tbody>
                     <tr>
-                        <td className={styles.match_info}>
-                            <div className={styles.match_time}>{time}</div>
-                            <div className={styles.match_meta}>{match.meta}</div>
-                        </td>
-                        <TeamCell teamType={'team1'} teamInfo={team1}/>
-                        <td className={styles.score}>
-                            <span className={styles.dash}>vs</span>
-                        </td>
-                        <TeamCell teamType={'team2'} teamInfo={team2}/>
-                        <td className={styles.match_additional}>
-                            <Image
-                                src={matchEvent.logo}
-                                alt={matchEvent.name}
-                                width={30}
-                                height={30}/>
-                            <span className={styles.match_type}>{matchType}</span>
-                        </td>
+                        {title
+                            ? <>
+                                <td className={styles.match_info}>
+                                    <div className={styles.match_time}>{time}</div>
+                                    <div className={styles.match_meta}>{match.meta}</div>
+                                </td>
+                                <td className={styles.match_title}>{title}</td>
+                            </>
+                            : <>
+                            <td className={styles.match_info}>
+                                <div className={clsx({
+                                    [styles.match_time]: match.date,
+                                    [styles.match_live]: !match.date
+                                })}>
+                                    {match.date ? time : `Live`}
+                                </div>
+                                <div className={styles.match_meta}>{match.meta}</div>
+                            </td>
+                            <TeamCell teamType={'team1'} teamInfo={team1}/>
+                            <td className={styles.score}>
+                                <span className={styles.dash}>vs</span>
+                            </td>
+                            <TeamCell teamType={'team2'} teamInfo={team2}/>
+                            <td className={styles.match_additional}>
+                                <Image
+                                    src={matchEvent.logo}
+                                    alt={matchEvent.name}
+                                    width={30}
+                                    height={30}/>
+                                <span className={styles.match_type}>{matchType}</span>
+                            </td>
+                        </>}
+
                     </tr>
                     </tbody>
                 </table>

@@ -31,12 +31,14 @@
     margin-bottom: 5px;
     margin-top: 5px;
     box-shadow: 0 1px 2px 0 rgb(50 50 50 / 40%);
+    position: relative;
 
     table {
       width: 100%;
       table-layout: fixed;
       border-collapse: separate;
       box-sizing: border-box;
+      min-height: 40px;
     }
 
     transition-property: all;
@@ -50,6 +52,14 @@
       .match_additional {
         opacity: .9;
       }
+    }
+
+    .match_title {
+      position: absolute;
+      font-weight: 700;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .match_info {
@@ -66,6 +76,15 @@
         font-weight: 700;
       }
 
+      .match_live {
+        background-color: #fc1d1d;
+        color: aliceblue;
+        border-radius: 4px;
+        margin: 2px 0.5px;
+        text-align: center;
+        font-weight: 600;
+      }
+
       .match_meta {
         background-color: rgba(0, 0, 0, .1);
         margin-top: 1px;
@@ -75,9 +94,6 @@
         font-weight: 700;
         color: rgba(84, 84, 84, 0.45);
       }
-    }
-
-    .team_cell {
     }
 
     .score {

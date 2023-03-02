@@ -34,6 +34,8 @@ export const messages = {
         event_finished_status: 'Finished',
         event_upcoming_status: 'Upcoming',
         empty_matches_message: 'No ended matches. Visit this page later',
+        live_matches_title: 'Live CS:GO matches',
+        group: 'Group',
     },
     [LOCALES.BELARUSIAN]: {
         matches_button: `Матчы`,
@@ -68,6 +70,8 @@ export const messages = {
         event_finished_status: 'Завершаны',
         event_upcoming_status: 'Далейшы',
         empty_matches_message: 'Няма завершаных матчаў. Наведайце гэтую старонку пазней',
+        live_matches_title: 'Лайв матчы',
+        group: 'Група',
     },
     [LOCALES.UKRANIAN]: {
         matches_button: `Матчі`,
@@ -102,6 +106,8 @@ export const messages = {
         event_finished_status: 'Завершено',
         event_upcoming_status: 'Майбутній',
         empty_matches_message: 'Немає завершених матчів. Відвідайте цю сторінку пізніше',
+        live_matches_title: 'Лайв матчі',
+        group: 'Група',
     },
     [LOCALES.RUSSIAN]: {
         matches_button: `Матчи`,
@@ -136,5 +142,7 @@ export const messages = {
         event_finished_status: 'Завершен',
         event_upcoming_status: 'Предстоящий',
         empty_matches_message: 'Нет завершенных матчей. Посетите эту страницу позже',
+        live_matches_title: 'Лайв матчи',
+        group: 'Группа',
     }
 }

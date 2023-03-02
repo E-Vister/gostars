@@ -47,6 +47,8 @@ export interface IMatch {
     meta: 'bo1' | 'bo2' | 'bo3' | 'bo5';
     status: 'upcoming' | 'ended';
     stream: string;
+    live: boolean;
+    title?: string
 }
 
 export interface IMatches {
