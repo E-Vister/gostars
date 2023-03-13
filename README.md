@@ -51,9 +51,9 @@ Before starting the installation process, make sure you have Node.js and NPM ins
 - Open the terminal and run the following commands
 
 ```bash
-$ git clone https://gitlab.12devs.com/training/2023_trainee/gostars_frontend
+$ git clone https://github.com/E-Vister/gostars.git
 
-$ cd gostars_frontend
+$ cd gostars
 
 $ yarn install
 ```
